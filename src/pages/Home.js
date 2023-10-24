@@ -3,7 +3,6 @@ import styled from "styled-components";
 import hotelImage from '../assets/hotel.svg';
 import userImage from '../assets/user.svg';
 import roomImage from '../assets/room.svg';
-import Header from "../components/Header";
 
 const Container = styled.div`
   width: 100%;
