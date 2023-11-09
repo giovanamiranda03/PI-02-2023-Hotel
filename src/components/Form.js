@@ -1,14 +1,14 @@
-import axios from "axios";
-import React, { useRef , useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import styled from "styled-components";
+import axios from 'axios';
+import React, { useRef, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 const FormContainer = styled.form`
   display: flex;
   align-items: flex-end;
   gap: 40px;
   flex-wrap: wrap;
-  background-color: #16161A;
+  background-color: #16161a;
   padding: 20px;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
@@ -24,12 +24,12 @@ const Input = styled.input`
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
-  background-color: #16161A;
+  background-color: #16161a;
   height: 40px;
 
   ::placeholder {
-       color: #ccc;
-   }
+    color: #ccc;
+  }
 `;
 
 const Select = styled.select`
@@ -37,7 +37,7 @@ const Select = styled.select`
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
-  background-color: #16161A;
+  background-color: #16161a;
   color: #ccc;
   height: 40px;
 `;
@@ -50,16 +50,16 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   border: none;
-  background-color: #F5D156;
-  color: #16161A;
+  background-color: #f5d156;
+  color: #16161a;
   font-weight: bold;
   height: 42px;
 `;
 
 const Form = ({ getClients, onEdit, setOnEdit }) => {
-  const [selectedHosted, setSelectedHosted] = useState("");
+  const [selectedHosted, setSelectedHosted] = useState('');
 
-  const onHostedChange = (value) => {
+  const onHostedChange = value => {
     setSelectedHosted(value);
   };
 
@@ -77,24 +77,24 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     }
   }, [onEdit, ref]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const clients = ref.current;
 
-    if (
-      !clients.nome.value ||
-      !clients.email.value ||
-      !clients.fone.value ||
-      !clients.cpf.value ||
-      !clients.hosted.value
-    ) {
-      return toast.warn("Preencha todos os campos!");
-    }
+    // if (
+    //   !clients.nome.value ||
+    //   !clients.email.value ||
+    //   !clients.fone.value ||
+    //   !clients.cpf.value ||
+    //   !clients.hosted.value
+    // ) {
+    //   return toast.warn('Preencha todos os campos!');
+    // }
 
     if (onEdit) {
       await axios
-        .put("http://localhost:8800/" + onEdit.id, {
+        .put('http://localhost:8800/' + onEdit.id, {
           nome: clients.nome.value,
           email: clients.email.value,
           fone: clients.fone.value,
@@ -105,7 +105,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
         .catch(({ data }) => toast.error(data));
     } else {
       await axios
-        .post("http://localhost:8800", {
+        .post('http://localhost:8800/', {
           nome: clients.nome.value,
           email: clients.email.value,
           fone: clients.fone.value,
@@ -116,18 +116,23 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
         .catch(({ data }) => toast.error(data));
     }
 
-    clients.nome.value = "";
-    clients.email.value = "";
-    clients.fone.value = "";
-    clients.cpf.value = "";
-    clients.hosted.value = "";
+    clients.nome.value = '';
+    clients.email.value = '';
+    clients.fone.value = '';
+    clients.cpf.value = '';
+    clients.hosted.value = '';
 
     setOnEdit(null);
     getClients();
   };
 
   return (
-    <FormContainer ref={ref} onSubmit={handleSubmit}>
+    <FormContainer
+      action="/cadastrar_cliente.php"
+      method="POST"
+      ref={ref}
+      onSubmit={handleSubmit}
+    >
       <InputArea>
         <Label>Nome</Label>
         <Input placeholder="Insira seu nome" name="nome" />
@@ -146,9 +151,13 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
       </InputArea>
       <InputArea>
         <Label>Hospedado</Label>
-        <Select name="hosted" value={onEdit ? onEdit.hosted : ""} onChange={(e) => onHostedChange(e.target.value)}>
-          <option value="Yes">Sim</option>
-          <option value="No">Não</option>
+        <Select
+          name="hosted"
+          value={onEdit ? onEdit.hosted : ''}
+          onChange={e => onHostedChange(e.target.value)}
+        >
+          <option value="1">Sim</option>
+          <option value="0">Não</option>
         </Select>
       </InputArea>
       <Button type="submit">SALVAR</Button>
