@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -26,6 +26,7 @@ const Input = styled.input`
   border-radius: 5px;
   background-color: #16161a;
   height: 40px;
+  color: #fff;
 
   ::placeholder {
     color: #ccc;
@@ -38,7 +39,7 @@ const Select = styled.select`
   border: 1px solid #bbb;
   border-radius: 5px;
   background-color: #16161a;
-  color: #ccc;
+  color: #fff;
   height: 40px;
 `;
 
@@ -71,9 +72,9 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
 
       clients.nome.value = onEdit.nome;
       clients.email.value = onEdit.email;
-      clients.fone.value = onEdit.fone;
+      clients.telefone.value = onEdit.telefone;
       clients.cpf.value = onEdit.cpf;
-      clients.hosted.value = onEdit.hosted;
+      clients.hospedado.value = onEdit.hospedado ? '1' : '0';
     }
   }, [onEdit, ref]);
 
@@ -81,36 +82,35 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     e.preventDefault();
 
     const clients = ref.current;
-
-    // if (
-    //   !clients.nome.value ||
-    //   !clients.email.value ||
-    //   !clients.fone.value ||
-    //   !clients.cpf.value ||
-    //   !clients.hosted.value
-    // ) {
-    //   return toast.warn('Preencha todos os campos!');
-    // }
+    if (
+      !clients.nome.value ||
+      !clients.email.value ||
+      !clients.telefone.value ||
+      !clients.cpf.value ||
+      !clients.hospedado.value
+    ) {
+      return toast.warn('Preencha todos os campos!');
+    }
 
     if (onEdit) {
       await axios
-        .put('http://localhost:8800/' + onEdit.id, {
+        .put('http://localhost:3000/clientes/' + onEdit.id, {
           nome: clients.nome.value,
           email: clients.email.value,
-          fone: clients.fone.value,
+          telefone: clients.telefone.value,
           cpf: clients.cpf.value,
-          hosted: selectedHosted,
+          hospedado: selectedHosted == "0" ? false : true,
         })
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
     } else {
       await axios
-        .post('http://localhost:8800/', {
+        .post('http://localhost:3000/clientes', {
           nome: clients.nome.value,
           email: clients.email.value,
-          fone: clients.fone.value,
+          telefone: clients.telefone.value,
           cpf: clients.cpf.value,
-          hosted: selectedHosted,
+          hospedado: selectedHosted == "0" ? false : true,
         })
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
@@ -118,9 +118,9 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
 
     clients.nome.value = '';
     clients.email.value = '';
-    clients.fone.value = '';
+    clients.telefone.value = '';
     clients.cpf.value = '';
-    clients.hosted.value = '';
+    clients.hospedado.value = '';
 
     setOnEdit(null);
     getClients();
@@ -147,13 +147,13 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
       </InputArea>
       <InputArea>
         <Label>Telefone</Label>
-        <Input placeholder="Insira o telefone" name="fone" />
+        <Input placeholder="Insira o telefone" name="telefone" />
       </InputArea>
       <InputArea>
         <Label>Hospedado</Label>
         <Select
-          name="hosted"
-          value={onEdit ? onEdit.hosted : ''}
+          name="hospedado"
+          value={onEdit ? onEdit.hosted : selectedHosted}
           onChange={e => onHostedChange(e.target.value)}
         >
           <option value="1">Sim</option>

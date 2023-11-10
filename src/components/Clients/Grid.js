@@ -48,7 +48,7 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
 
   const handleDelete = async (id) => {
     await axios
-      .delete("http://localhost:8800/" + id)
+      .delete("http://localhost:3000/clientes/" + id)
       .then(({ data }) => {
         const newArray = clients.filter((user) => user.id !== id);
 
@@ -59,6 +59,7 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
 
     setOnEdit(null);
   };
+
 
   return (
     <Table>
@@ -74,11 +75,11 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
       <Tbody>
         {clients.map((item, i) => (
           <Tr key={i}>
-            <Td width="30%">{item.nome}</Td>
-            <Td width="30%">{item.email}</Td>
+            <Td width="20%">{item.nome}</Td>
+            <Td width="20%">{item.email}</Td>
+            <Td width="20%">{item.telefone}</Td>
             <Td width="20%" onlyWeb>{item.cpf}</Td>
-            <Td width="20%" onlyWeb>{item.fone}</Td>
-            <Td width="20%" onlyWeb>{item.hosted}</Td>
+            <Td width="15%" onlyWeb>{item.hospedado ? "Sim" : "Não"}</Td>
             <Td alignCenter width="5%">
               <FaEdit onClick={() => handleEdit(item)} />
             </Td>

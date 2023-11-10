@@ -1,0 +1,106 @@
+{
+  "funcionarios": [
+    {
+      "id_funcionario": 1,
+      "email": "funcionario@email.com",
+      "senha": "funcionario123"
+    }
+  ],
+  "clientes": [
+    {
+      "nome": "João Silva",
+      "email": "joao@email.com",
+      "telefone": "(11) 1234-5678",
+      "cpf": "123.456.789-00",
+      "hospedado": true,
+      "id": 1
+    },
+    {
+      "nome": "Maria Souza",
+      "email": "maria@email.com",
+      "telefone": "(21) 9876-5432",
+      "cpf": "987.654.321-00",
+      "hospedado": true,
+      "id": 2
+    },
+    {
+      "nome": "Pedro Oliveira",
+      "email": "pedro@email.com",
+      "telefone": "(31) 1111-2222",
+      "cpf": "111.222.333-44",
+      "hospedado": true,
+      "id": 3
+    }
+  ],
+  "quartos": [
+    {
+      "capacidade": "5",
+      "preco": "5454",
+      "disponivel": "",
+      "id": 5
+    },
+    {
+      "capacidade": "5",
+      "preco": "24.98",
+      "disponivel": "",
+      "id": 6
+    },
+    {
+      "capacidade": "5",
+      "preco": "24.98",
+      "disponivel": "",
+      "id": 7
+    },
+    {
+      "capacidade": "5",
+      "preco": "24.98",
+      "disponivel": "",
+      "id": 9
+    },
+    {
+      "capacidade": "5",
+      "preco": "24.98",
+      "disponivel": "",
+      "id": 10
+    },
+    {
+      "capacidade": "",
+      "preco": "",
+      "disponivel": "0",
+      "id": 11
+    }
+  ],
+  "reservas": [
+    {
+      "id_reserva": 1,
+      "id_cliente": 1,
+      "cliente": "João Silva",
+      "cpf_cliente": "123.456.789-00",
+      "data_reserva": "2023-11-10",
+      "data_entrada": "2023-11-15",
+      "data_saida": "2023-11-20",
+      "id_quarto": 1,
+      "valor": 600
+    },
+    {
+      "id_reserva": 2,
+      "cliente": "Maria Souza",
+      "cpf_cliente": "987.654.321-00",
+      "data_reserva": "2023-11-12",
+      "data_entrada": "2023-11-18",
+      "data_saida": "2023-11-22",
+      "id_quarto": 1,
+      "valor": 600
+    },
+    {
+      "id_reserva": 3,
+      "cliente": "Pedro Oliveira",
+      "cpf_cliente": "111.222.333-44",
+      "data_reserva": "2023-11-14",
+      "data_entrada": "2023-11-16",
+      "data_saida": "2023-11-18",
+      "id_quarto": 1,
+      "valor": 600
+    }
+  ]
+}

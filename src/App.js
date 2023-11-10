@@ -1,17 +1,17 @@
+import React from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
-import GlobalStyle from "./styles/global";
 import Header from "./components/Header";
-import React from 'react';
-import Home from './pages/Home';
 import Clients from './pages/Clients';
-import Rooms from './pages/Rooms';
+import Home from './pages/Home';
 import Reservations from './pages/Reservations';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Rooms from './pages/Rooms';
+import GlobalStyle from "./styles/global";
 
 const Container = styled.div`
   width: 100%;
-  max-width: 800px;
+  max-width: 1024px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;

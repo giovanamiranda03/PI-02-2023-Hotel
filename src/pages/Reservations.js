@@ -1,19 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import Form from "../components/Form";
-import Grid from "../components/Grid";
 import styled from "styled-components";
+import Form from "../components/Reservations/Form";
+import Grid from "../components/Reservations/Grid";
 
 const Title = styled.h2``
 
 export default function Reservations() {
-  const [clients, setClients] = useState([]);
+  const [reservations, setReservations] = useState([]);
   const [onEdit, setOnEdit] = useState(null);
+  const [clients, setClients] = useState([]);
+
+  const getReservations = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/reservas");
+      setReservations(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   const getClients = async () => {
     try {
-      const res = await axios.get("http://localhost:8800");
+      const res = await axios.get("http://localhost:3000/clientes");
       setClients(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
     } catch (error) {
       toast.error(error);
@@ -21,14 +31,15 @@ export default function Reservations() {
   };
 
   useEffect(() => {
+    getReservations();
     getClients();
-  }, [setClients]);
+  }, [setReservations]);
 
   return (
     <>
-    <Title>Reservas</Title>
-      <Form onEdit={onEdit} setOnEdit={setOnEdit} getClients={getClients} />
-      <Grid setOnEdit={setOnEdit} clients={clients} setClients={setClients} />
+      <Title>Reservas</Title>
+      <Form onEdit={onEdit} setOnEdit={setOnEdit} getReservations={getReservations} clients={clients} />
+      <Grid setOnEdit={setOnEdit} reservations={reservations} setReservations={setReservations} />
       <ToastContainer autoClose={3000} position={toast.POSITION.BOTTOM_LEFT} />
     </>
   )

@@ -1,8 +1,8 @@
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import hotelImage from '../assets/hotel.svg';
-import userImage from '../assets/user.svg';
 import roomImage from '../assets/room.svg';
+import userImage from '../assets/user.svg';
 
 const Container = styled.div`
   width: 100%;
@@ -76,13 +76,13 @@ export default function Menu() {
           <Title>Gerenciar clientes</Title>
           <p>Acesse para poder gerenciar totalmente as informações de seus clientes</p>
           <Button>
-          <a href="/clients">Acessar</a>
+            <a href="/clients">Acessar</a>
           </Button>
         </Box>
         <Box>
           <img src={roomImage} alt="Ícone de quarto" />
           <Title>Gerenciar quartos</Title>
-          <p>Acesse para poder gerenciar totalmente as informações de seus clientes</p>
+          <p>Acesse para poder gerenciar totalmente as informações de seus quartos</p>
           <Button>
             <a href="/rooms">Acessar</a>
           </Button>
@@ -90,10 +90,8 @@ export default function Menu() {
         <Box>
           <img src={hotelImage} alt="Ícone de hotel" />
           <Title>Gerenciar reservas</Title>
-          <p>Acesse para poder gerenciar totalmente as informações de seus clientes</p>
-          <Button>
-          <a href="/reservations">Acessar</a>
-          </Button>
+          <p>Acesse para poder gerenciar totalmente as informações de suas reservas</p>
+          <Button href="/reservations">Acessar</Button>
         </Box>
       </Container>
     </>
