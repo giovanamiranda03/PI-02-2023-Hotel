@@ -5,11 +5,13 @@ import styled from 'styled-components';
 
 const FormContainer = styled.form`
   display: flex;
-  align-items: flex-end;
-  gap: 40px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 60px;
+  row-gap: 20px;
+  padding: 30px;
   background-color: #16161a;
-  padding: 20px;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
 `;
@@ -20,12 +22,12 @@ const InputArea = styled.div`
 `;
 
 const Input = styled.input`
-  width: 120px;
+  width: 260px;
+  height: 46px;
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
   background-color: #16161a;
-  height: 40px;
   color: #fff;
 
   ::placeholder {
@@ -34,19 +36,20 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  width: 130px;
+  width: 260px;
+  height: 46px; 
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
   background-color: #16161a;
   color: #fff;
-  height: 40px;
 `;
 
 const Label = styled.label``;
 
 const Button = styled.button`
-  width: 100px;
+  width: 260px;
+  height: 46px; 
   padding: 0 10px;
   cursor: pointer;
   border-radius: 5px;
@@ -54,7 +57,6 @@ const Button = styled.button`
   background-color: #f5d156;
   color: #16161a;
   font-weight: bold;
-  height: 42px;
 `;
 
 const Form = ({ getClients, onEdit, setOnEdit }) => {
@@ -99,7 +101,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
           email: clients.email.value,
           telefone: clients.telefone.value,
           cpf: clients.cpf.value,
-          hospedado: selectedHosted == "0" ? false : true,
+          hospedado: selectedHosted === "0" ? false : true,
         })
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
@@ -110,7 +112,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
           email: clients.email.value,
           telefone: clients.telefone.value,
           cpf: clients.cpf.value,
-          hospedado: selectedHosted == "0" ? false : true,
+          hospedado: selectedHosted === "0" ? false : true,
         })
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));

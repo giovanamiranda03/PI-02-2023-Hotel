@@ -8,10 +8,9 @@ const Table = styled.table`
   width: 100%;
   background-color: #16161A;
   padding: 20px;
+  margin-top: 20px;
   box-shadow: 0px 0px 2px #ccc;
-  border-radius: 5px;
-  max-width: 1120px;
-  margin: 20px auto;
+  border-radius: 5px; 
   word-break: break-all;
 `;
 
@@ -67,23 +66,22 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
         <Tr>
           <Th>Nome</Th>
           <Th>Email</Th>
-          <Th onlyWeb>Telefone</Th>
+          <Th>Telefone</Th>
           <Th>CPF</Th>
           <Th>Hospedado</Th>
+          <Th>Ações</Th>
         </Tr>
       </Thead>
       <Tbody>
         {clients.map((item, i) => (
           <Tr key={i}>
-            <Td width="20%">{item.nome}</Td>
-            <Td width="20%">{item.email}</Td>
-            <Td width="20%">{item.telefone}</Td>
-            <Td width="20%" onlyWeb>{item.cpf}</Td>
-            <Td width="15%" onlyWeb>{item.hospedado ? "Sim" : "Não"}</Td>
-            <Td alignCenter width="5%">
+            <Td>{item.nome}</Td>
+            <Td>{item.email}</Td>
+            <Td>{item.telefone}</Td>
+            <Td onlyWeb>{item.cpf}</Td>
+            <Td onlyWeb>{item.hospedado ? "Sim" : "Não"}</Td>
+            <Td alignCenter>
               <FaEdit onClick={() => handleEdit(item)} />
-            </Td>
-            <Td alignCenter width="5%">
               <FaTrash onClick={() => handleDelete(item.id)} />
             </Td>
           </Tr>
