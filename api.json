@@ -30,15 +30,17 @@
       "cpf": "111.222.333-44",
       "hospedado": true,
       "id": 3
+    },
+    {
+      "nome": "teste",
+      "email": "teste@teste.com",
+      "telefone": "52654656",
+      "cpf": "64655",
+      "hospedado": true,
+      "id": 4
     }
   ],
   "quartos": [
-    {
-      "capacidade": "5",
-      "preco": "5454",
-      "disponivel": "",
-      "id": 5
-    },
     {
       "capacidade": "5",
       "preco": "24.98",
@@ -64,9 +66,9 @@
       "id": 10
     },
     {
-      "capacidade": "",
-      "preco": "",
-      "disponivel": "0",
+      "capacidade": "5",
+      "preco": "200",
+      "disponivel": true,
       "id": 11
     }
   ],
