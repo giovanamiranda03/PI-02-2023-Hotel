@@ -7,13 +7,14 @@ import roomImage from '../assets/room.svg';
 import logoutImage from '../assets/logout.svg';
 
 const HeaderContainer = styled.header`
-  background-color: #16161A;
-  color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 5px;
+  font-size: 22px;
+  background-color: #16161A;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -24,6 +25,7 @@ const HeaderContainer = styled.header`
 const Logo = styled.div`
   font-size: 24px;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 const Navigation = styled.nav`
@@ -32,7 +34,7 @@ const Navigation = styled.nav`
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 20px;
+    gap: 60px;
     
     @media (max-width: 768px) {
       flex-direction: column;
@@ -50,7 +52,7 @@ const Logout = styled.div`
   }
 
   img {
-    width: 2em;
+    width: 1.5em;
     display: block;
     margin: 0 auto 0.5em;
   }
@@ -66,7 +68,7 @@ const NavItem = styled.li`
   }
 
   img {
-    width: 2em;
+    width: 1.5em;
     display: block;
     margin: 0 auto 0.5em;
   }
@@ -76,7 +78,9 @@ export default function Header() {
   return (
     <HeaderContainer>
       <Logo>
-        <img src={logo} alt="Logo do site" />
+        <a href="/">
+          <img src={logo} alt="Logo do site" />
+        </a>
       </Logo>
       <Navigation>
         <ul>

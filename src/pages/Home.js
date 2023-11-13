@@ -6,7 +6,7 @@ import userImage from '../assets/user.svg';
 
 const Container = styled.div`
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin-top: 200px;
   display: flex;
   flex-direction: row;
@@ -16,8 +16,8 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-  width: 300px;
-  height: 250px;
+  width: 336px;
+  height: 337px;
   background-color: #16161A;
   border: 1px solid #F5D156;
   border-radius: 8px;
@@ -26,8 +26,9 @@ const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10px;
-  gap: 10px;
+  margin: 20px;
+  gap: 20px;
+  font-size: 22px;
   cursor: pointer;
 
   img {
@@ -39,20 +40,21 @@ const Box = styled.div`
   p {
     color: #ccc;
     text-align: center;
-    font-size: 12px;
+    font-size: 18px;
   }
 `;
 
 const Button = styled.button`
-  width: 200px;
+  width: 300px;
+  height: 53px;
   padding: 0 10px;
   cursor: pointer;
   border-radius: 5px;
   border: none;
   background-color: #F5D156;
   color: #16161A;
+  font-size: 18px;
   font-weight: bold;
-  height: 42px;
   transition: background-color 0.5s;
 
   a {
@@ -75,23 +77,25 @@ export default function Menu() {
           <img src={userImage} alt="Ícone de usuário" />
           <Title>Gerenciar clientes</Title>
           <p>Acesse para poder gerenciar totalmente as informações de seus clientes</p>
-          <Button>
-            <a href="/clients">Acessar</a>
-          </Button>
+          <a href="/clients">
+            <Button>Acessar</Button>
+          </a>
         </Box>
         <Box>
           <img src={roomImage} alt="Ícone de quarto" />
           <Title>Gerenciar quartos</Title>
           <p>Acesse para poder gerenciar totalmente as informações de seus quartos</p>
-          <Button>
-            <a href="/rooms">Acessar</a>
-          </Button>
+          <a href="/rooms">
+            <Button>Acessar</Button>
+          </a>
         </Box>
         <Box>
           <img src={hotelImage} alt="Ícone de hotel" />
           <Title>Gerenciar reservas</Title>
           <p>Acesse para poder gerenciar totalmente as informações de suas reservas</p>
-          <Button href="/reservations">Acessar</Button>
+          <a href="/reservations">
+            <Button>Acessar</Button>
+          </a>
         </Box>
       </Container>
     </>
