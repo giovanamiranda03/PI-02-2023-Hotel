@@ -8,10 +8,9 @@ const Table = styled.table`
   width: 100%;
   background-color: #16161A;
   padding: 20px;
+  margin-top: 20px;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
-  max-width: 1120px;
-  margin: 20px auto;
   word-break: break-all;
 `;
 
@@ -69,25 +68,24 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
           <Th>CPF do cliente</Th>
           <Th>Data da reserva</Th>
           <Th>Data de entrada</Th>
-          <Th>Data da saida</Th>
+          <Th>Data da saída</Th>
           <Th>N°Quarto</Th>
           <Th>Valor</Th>
+          <Th>Ações</Th>
         </Tr>
       </Thead>
       <Tbody>
         {reservations.map((item, i) => (
           <Tr key={i}>
-            <Td width="20%">{item.cliente}</Td>
-            <Td width="20%">{item.cpf_cliente}</Td>
-            <Td width="15%" onlyWeb>{item.data_reserva}</Td>
-            <Td width="15%" onlyWeb>{item.data_entrada}</Td>
-            <Td width="15%" onlyWeb>{item.data_saida}</Td>
-            <Td width="10%" onlyWeb>{item.id_quarto}</Td>
-            <Td width="10%" onlyWeb>{item.valor}</Td>
-            <Td alignCenter width="5%">
+            <Td>{item.cliente}</Td>
+            <Td>{item.cpf_cliente}</Td>
+            <Td onlyWeb>{item.data_reserva}</Td>
+            <Td onlyWeb>{item.data_entrada}</Td>
+            <Td onlyWeb>{item.data_saida}</Td>
+            <Td onlyWeb>{item.id_quarto}</Td>
+            <Td onlyWeb>{item.valor}</Td>
+            <Td alignCenter>
               <FaEdit onClick={() => handleEdit(item)} />
-            </Td>
-            <Td alignCenter width="5%">
               <FaTrash onClick={() => handleDelete(item.id)} />
             </Td>
           </Tr>
