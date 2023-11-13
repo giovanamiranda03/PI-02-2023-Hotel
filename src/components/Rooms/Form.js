@@ -5,11 +5,13 @@ import styled from 'styled-components';
 
 const FormContainer = styled.form`
   display: flex;
-  align-items: flex-end;
-  gap: 40px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 60px;
+  row-gap: 20px;
+  padding: 30px;
   background-color: #16161a;
-  padding: 20px;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
 `;
@@ -20,12 +22,12 @@ const InputArea = styled.div`
 `;
 
 const Input = styled.input`
-  width: 120px;
+  width: 195px;
+  height: 46px;
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
   background-color: #16161a;
-  height: 40px;
   color: #fff;
 
   ::placeholder {
@@ -34,33 +36,35 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  width: 130px;
+  width: 195px;
+  height: 46px;
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
   background-color: #16161a;
   color: #fff;
-  height: 40px;
 `;
 
 const Label = styled.label``;
 
 const Button = styled.button`
-  width: 100px;
+  width: 195px;
+  height: 46px;
   padding: 0 10px;
   cursor: pointer;
   border-radius: 5px;
-  border: none;s
+  border: none;
   background-color: #f5d156;
   color: #16161a;
   font-weight: bold;
-  height: 42px;
 `;
 
 const Form = ({ getRooms, onEdit, setOnEdit }) => {
+  const [capacidade, setCapacidade] = useState('');
+  const [preco, setPreco] = useState('');
   const [selectedDisponivel, setSelectedDisponivel] = useState('');
 
-  const onDisponivelChange = value => {
+  const onQuartoChange = value => {
     setSelectedDisponivel(value);
   };
 
@@ -68,50 +72,42 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
 
   useEffect(() => {
     if (onEdit) {
-      const rooms = ref.current;
-
-      rooms.capacidade.value = onEdit.capacidade;
-      rooms.preco.value = onEdit.preco;
-      rooms.disponivel.value = onEdit.disponivel;
+      const { capacidade, preco, disponivel } = onEdit;
+      setCapacidade(capacidade);
+      setPreco(preco);
+      setSelectedDisponivel(disponivel ? '1' : '0');
     }
-  }, [onEdit, ref]);
+  }, [onEdit]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const rooms = ref.current;
-    // if (
-    //   !rooms.id.value ||
-    //   !rooms.capacidade.value ||
-    //   !rooms.preco.value ||
-    //   !rooms.disponivel.value ||
-    // ) {
-    //   return toast.warn('Preencha todos os campos!');
-    // }
+    if (!capacidade || !preco || !selectedDisponivel) {
+      return toast.warn('Preencha todos os campos!');
+    }
+
+    const formData = {
+      capacidade: capacidade,
+      preco: preco,
+      disponivel: selectedDisponivel === '0' ? false : true,
+    };
 
     if (onEdit) {
       await axios
-        .put('http://localhost:3000/quartos' + onEdit.id, {
-          capacidade: rooms.capacidade.value,
-          preco: rooms.preco.value,
-          disponivel: selectedDisponivel
-        })
+        .put(`http://localhost:3000/quartos/${onEdit.id}`, formData)
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
     } else {
       await axios
-        .post('http://localhost:3000/quartos', {
-          capacidade: rooms.capacidade.value,
-          preco: rooms.preco.value,
-          disponivel: selectedDisponivel
-        })
+        .post('http://localhost:3000/quartos', formData)
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
     }
 
-    rooms.capacidade.value = '';
-    rooms.preco.value = '';
-    rooms.disponivel.value = '';
+    // Limpar campos do formulário
+    setCapacidade('');
+    setPreco('');
+    setSelectedDisponivel('');
 
     setOnEdit(null);
     getRooms();
@@ -125,19 +121,33 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
       onSubmit={handleSubmit}
     >
       <InputArea>
-        <InputArea>
-          <Label>Capacidade</Label>
-          <Input type='number' step=".01" placeholder="" name="capacidade" />
-        </InputArea>
-        <Label>Preço</Label>
-        <Input type='number' step=".01" placeholder="Insira o preço da diaria" name="preco" />
+        <Label>Capacidade</Label>
+        <Input
+          type='number'
+          step=".01"
+          placeholder="Insira a capacidade"
+          name="capacidade"
+          value={capacidade}
+          onChange={(e) => setCapacidade(e.target.value)}
+        />
       </InputArea>
       <InputArea>
-        <Label>Disponivel</Label>
+        <Label>Preço</Label>
+        <Input
+          type='number'
+          step=".01"
+          placeholder="Insira o preço da diária"
+          name="preco"
+          value={preco}
+          onChange={(e) => setPreco(e.target.value)}
+        />
+      </InputArea>
+      <InputArea>
+        <Label>Disponível</Label>
         <Select
           name="disponivel"
-          value={onEdit ? onEdit.disponivel : selectedDisponivel ? "1" : "0"}
-          onChange={e => onDisponivelChange(e.target.value)}
+          value={selectedDisponivel}
+          onChange={(e) => onQuartoChange(e.target.value)}
         >
           <option value="1">Sim</option>
           <option value="0">Não</option>

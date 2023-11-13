@@ -8,10 +8,9 @@ const Table = styled.table`
   width: 100%;
   background-color: #16161A;
   padding: 20px;
+  margin-top: 20px;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
-  max-width: 1120px;
-  margin: 20px auto;
   word-break: break-all;
 `;
 
@@ -67,20 +66,19 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
           <Th>N°Quarto</Th>
           <Th>Capacidade</Th>
           <Th>Preço</Th>
-          <Th>Disponivel</Th>
+          <Th>Disponível</Th>
+          <Th>Ações</Th>
         </Tr>
       </Thead>
       <Tbody>
         {rooms.map((item, i) => (
           <Tr key={i}>
-            <Td width="20%">{item.id}</Td>
-            <Td width="25%">{item.capacidade}</Td>
-            <Td width="20%">{item.preco}</Td>
-            <Td width="30%">{item.disponivel ? "Sim" : "Não"}</Td>
-            <Td alignCenter width="5%">
+            <Td >{item.id}</Td>
+            <Td >{item.capacidade}</Td>
+            <Td >{item.preco}</Td>
+            <Td >{item.disponivel ? "Sim" : "Não"}</Td>
+            <Td alignCenter >
               <FaEdit onClick={() => handleEdit(item)} />
-            </Td>
-            <Td alignCenter width="5%">
               <FaTrash onClick={() => handleDelete(item.id)} />
             </Td>
           </Tr>
