@@ -103,16 +103,16 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (
-    //   !selectedCliente ||
-    //   !dataReserva ||
-    //   !dataEntrada ||
-    //   !dataSaida ||
-    //   !selectedQuarto ||
-    //   !valor
-    // ) {
-    //   return toast.warn('Preencha todos os campos!');
-    // }
+    if (
+      !selectedCliente ||
+      !dataReserva ||
+      !dataEntrada ||
+      !dataSaida ||
+      !selectedQuarto ||
+      !valor
+    ) {
+      return toast.warn('Preencha todos os campos!');
+    }
 
     const cpf_cliente = clients.find((c) => c.id === selectedCliente)?.cpf;
     const id_quarto = selectedQuarto;
@@ -202,19 +202,8 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
         <Input placeholder="Data de saída" name="data_saida" type="date" />
       </InputArea>
       <InputArea>
-        <Label>Quarto</Label>
-        <Select
-          name="id_quarto"
-          value={selectedQuarto}
-          onChange={(e) => onQuartoChange(e.target.value)}
-        >
-          {rooms && rooms.map((quarto) => (
-            <option key={quarto.id} value={quarto.id}>
-              {quarto.id}
-            </option>
-          ))}
-        </Select>
-
+        <Label>Número do quarto</Label>
+        <Input placeholder="Insira o numero do quarto" name="id_quarto" type="number" />
       </InputArea>
       <InputArea>
         <Label>Valor</Label>
