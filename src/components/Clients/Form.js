@@ -63,7 +63,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
 
       clients.nome.value = onEdit.nome;
       clients.email.value = onEdit.email;
-      clients.telefone.value = onEdit.telefone;
+      clients.fone.value = onEdit.fone;
       clients.cpf.value = onEdit.cpf;
     }
   }, [onEdit, ref]);
@@ -75,7 +75,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     if (
       !clients.nome.value ||
       !clients.email.value ||
-      !clients.telefone.value ||
+      !clients.fone.value ||
       !clients.cpf.value 
     ) {
       return toast.warn('Preencha todos os campos!');
@@ -86,7 +86,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
         .put('http://localhost:8080/hotel-api/clientes/atualizar.php', {
           nome: clients.nome.value,
           email: clients.email.value,
-          telefone: clients.telefone.value,
+          fone: clients.fone.value,
           cpf: clients.cpf.value,
         })
         .then(({ data }) => toast.success(data))
@@ -96,7 +96,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
         .post('http://localhost:8080/hotel-api/clientes/cadastrar.php', {
           nome: clients.nome.value,
           email: clients.email.value,
-          telefone: clients.telefone.value,
+          fone: clients.fone.value,
           cpf: clients.cpf.value,
         })
         .then(({ data }) => toast.success(data))
@@ -105,7 +105,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
 
     clients.nome.value = '';
     clients.email.value = '';
-    clients.telefone.value = '';
+    clients.fone.value = '';
     clients.cpf.value = '';
 
     setOnEdit(null);
@@ -113,12 +113,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
   };
 
   return (
-    <FormContainer
-      action="/cadastrar_cliente.php"
-      method="POST"
-      ref={ref}
-      onSubmit={handleSubmit}
-    >
+    <FormContainer>
       <InputArea>
         <Label>Nome</Label>
         <Input placeholder="Insira seu nome" name="nome" />
