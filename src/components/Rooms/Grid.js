@@ -47,7 +47,7 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
 
   const handleDelete = async (id) => {
     await axios
-      .delete("http://localhost:3000/quartos/" + id)
+      .delete("http://localhost:8080/hotel-api/quartos/excluir.php")
       .then(({ data }) => {
         const newArray = rooms.filter((user) => user.id !== id);
 

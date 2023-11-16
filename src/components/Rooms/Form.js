@@ -22,7 +22,7 @@ const InputArea = styled.div`
 `;
 
 const Input = styled.input`
-  width: 195px;
+  width: 220px;
   height: 46px;
   padding: 0 10px;
   border: 1px solid #bbb;
@@ -36,7 +36,7 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  width: 195px;
+  width: 220px;
   height: 46px;
   padding: 0 10px;
   border: 1px solid #bbb;
@@ -48,7 +48,7 @@ const Select = styled.select`
 const Label = styled.label``;
 
 const Button = styled.button`
-  width: 195px;
+  width: 220px;
   height: 46px;
   padding: 0 10px;
   cursor: pointer;
@@ -94,17 +94,16 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
 
     if (onEdit) {
       await axios
-        .put(`http://localhost:3000/quartos/${onEdit.id}`, formData)
+        .put(`http://localhost:8080/hotel-api/quartos/atualizar.php`, formData)
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
     } else {
       await axios
-        .post('http://localhost:3000/quartos', formData)
+        .post('http://localhost:8080/hotel-api/quartos/cadastrar.php', formData)
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
     }
 
-    // Limpar campos do formulário
     setCapacidade('');
     setPreco('');
     setSelectedDisponivel('');
