@@ -148,9 +148,11 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
           value={selectedDisponivel}
           onChange={(e) => onQuartoChange(e.target.value)}
         >
+          <option value="" disabled hidden>Escolha uma opção</option>
           <option value="1">Sim</option>
           <option value="0">Não</option>
         </Select>
+
       </InputArea>
       <Button type="submit">SALVAR</Button>
     </FormContainer>
