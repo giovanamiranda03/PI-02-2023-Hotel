@@ -14,6 +14,11 @@ const FormContainer = styled.form`
   background-color: #16161a;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    column-gap: 20px;
+  }
 `;
 
 const InputArea = styled.div`
@@ -35,16 +40,6 @@ const Input = styled.input`
   }
 `;
 
-const Select = styled.select`
-  width: 260px;
-  height: 46px; 
-  padding: 0 10px;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-  background-color: #16161a;
-  color: #fff;
-`;
-
 const Label = styled.label``;
 
 const Button = styled.button`
@@ -60,12 +55,6 @@ const Button = styled.button`
 `;
 
 const Form = ({ getClients, onEdit, setOnEdit }) => {
-  const [selectedHosted, setSelectedHosted] = useState('');
-
-  const onHostedChange = value => {
-    setSelectedHosted(value);
-  };
-
   const ref = useRef();
 
   useEffect(() => {
@@ -76,7 +65,6 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
       clients.email.value = onEdit.email;
       clients.telefone.value = onEdit.telefone;
       clients.cpf.value = onEdit.cpf;
-      clients.hospedado.value = onEdit.hospedado ? '1' : '0';
     }
   }, [onEdit, ref]);
 
@@ -88,31 +76,28 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
       !clients.nome.value ||
       !clients.email.value ||
       !clients.telefone.value ||
-      !clients.cpf.value ||
-      !clients.hospedado.value
+      !clients.cpf.value 
     ) {
       return toast.warn('Preencha todos os campos!');
     }
 
     if (onEdit) {
       await axios
-        .put('http://localhost:3000/clientes/' + onEdit.id, {
+        .put('http://localhost:8080/hotel-api/clientes/atualizar.php', {
           nome: clients.nome.value,
           email: clients.email.value,
           telefone: clients.telefone.value,
           cpf: clients.cpf.value,
-          hospedado: selectedHosted === "0" ? false : true,
         })
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
     } else {
       await axios
-        .post('http://localhost:3000/clientes', {
+        .post('http://localhost:8080/hotel-api/clientes/cadastrar.php', {
           nome: clients.nome.value,
           email: clients.email.value,
           telefone: clients.telefone.value,
           cpf: clients.cpf.value,
-          hospedado: selectedHosted === "0" ? false : true,
         })
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
@@ -122,7 +107,6 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     clients.email.value = '';
     clients.telefone.value = '';
     clients.cpf.value = '';
-    clients.hospedado.value = '';
 
     setOnEdit(null);
     getClients();
@@ -150,17 +134,6 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
       <InputArea>
         <Label>Telefone</Label>
         <Input placeholder="Insira o telefone" name="telefone" />
-      </InputArea>
-      <InputArea>
-        <Label>Hospedado</Label>
-        <Select
-          name="hospedado"
-          value={onEdit ? onEdit.hosted : selectedHosted}
-          onChange={e => onHostedChange(e.target.value)}
-        >
-          <option value="1">Sim</option>
-          <option value="0">Não</option>
-        </Select>
       </InputArea>
       <Button type="submit">SALVAR</Button>
     </FormContainer>

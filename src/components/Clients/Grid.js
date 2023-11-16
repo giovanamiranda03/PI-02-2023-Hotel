@@ -47,7 +47,7 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
 
   const handleDelete = async (id) => {
     await axios
-      .delete("http://localhost:3000/clientes/" + id)
+      .delete("http://localhost:8080/hotel-api/clientes/excluir.php" + id)
       .then(({ data }) => {
         const newArray = clients.filter((user) => user.id !== id);
 
@@ -68,7 +68,6 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
           <Th>Email</Th>
           <Th>Telefone</Th>
           <Th>CPF</Th>
-          <Th>Hospedado</Th>
           <Th>Ações</Th>
         </Tr>
       </Thead>
@@ -79,7 +78,6 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
             <Td>{item.email}</Td>
             <Td>{item.telefone}</Td>
             <Td onlyWeb>{item.cpf}</Td>
-            <Td onlyWeb>{item.hospedado ? "Sim" : "Não"}</Td>
             <Td alignCenter>
               <FaEdit onClick={() => handleEdit(item)} />
               <FaTrash onClick={() => handleDelete(item.id)} />
