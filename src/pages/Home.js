@@ -30,18 +30,23 @@ const Box = styled.div`
   gap: 20px;
   font-size: 22px;
   cursor: pointer;
+`;
 
-  img {
-    width: 3em;
-    display: block;
-    margin: 0 auto 0.5em;
-  }
+const Paragraph = styled.p`
+  color: #ccc;
+  text-align: center;
+  font-size: 18px;
+`;
 
-  p {
-    color: #ccc;
-    text-align: center;
-    font-size: 18px;
-  }
+const Image = styled.img`
+  width: 3em;
+  display: block;
+  margin: 0 auto 0.5em;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  color: #16161A;
 `;
 
 const Button = styled.button`
@@ -57,11 +62,6 @@ const Button = styled.button`
   font-weight: bold;
   transition: background-color 0.5s;
 
-  a {
-    text-decoration: none;
-    color: #16161A;
-  }
-
   &:hover {
     background-color: #F5D189;
   }
@@ -74,28 +74,28 @@ export default function Menu() {
     <>
       <Container>
         <Box>
-          <img src={userImage} alt="Ícone de usuário" />
+          <Image src={userImage} alt="Ícone de usuário" />
           <Title>Gerenciar clientes</Title>
-          <p>Acesse para poder gerenciar totalmente as informações de seus clientes</p>
-          <a href="/clients">
+          <Paragraph>Acesse para poder gerenciar totalmente as informações de seus clientes</Paragraph>
+          <Link href="/clients">
             <Button>Acessar</Button>
-          </a>
+          </Link>
         </Box>
         <Box>
-          <img src={roomImage} alt="Ícone de quarto" />
+          <Image src={roomImage} alt="Ícone de quarto" />
           <Title>Gerenciar quartos</Title>
-          <p>Acesse para poder gerenciar totalmente as informações de seus quartos</p>
-          <a href="/rooms">
+          <Paragraph>Acesse para poder gerenciar totalmente as informações de seus quartos</Paragraph>
+          <Link href="/rooms">
             <Button>Acessar</Button>
-          </a>
+          </Link>
         </Box>
         <Box>
-          <img src={hotelImage} alt="Ícone de hotel" />
+          <Image src={hotelImage} alt="Ícone de hotel" />
           <Title>Gerenciar reservas</Title>
-          <p>Acesse para poder gerenciar totalmente as informações de suas reservas</p>
-          <a href="/reservations">
+          <Paragraph>Acesse para poder gerenciar totalmente as informações de suas reservas</Paragraph>
+          <Link href="/reservations">
             <Button>Acessar</Button>
-          </a>
+          </Link>
         </Box>
       </Container>
     </>
