@@ -113,12 +113,7 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
   };
 
   return (
-    <FormContainer
-      action="/cadastrar_cliente.php"
-      method="POST"
-      ref={ref}
-      onSubmit={handleSubmit}
-    >
+    <FormContainer>
       <InputArea>
         <Label>Capacidade</Label>
         <Input

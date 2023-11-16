@@ -74,25 +74,20 @@ const Button = styled.button`
 
 const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
   const [selectedCliente, setSelectedCliente] = useState("");
-  const [selectedQuarto, setSelectedQuarto] = useState("");
   const [dataReserva, setDataReserva] = useState("");
   const [dataEntrada, setDataEntrada] = useState("");
   const [dataSaida, setDataSaida] = useState("");
+  const [idQuarto, setIdQuarto] = useState("");
   const [valor, setValor] = useState("");
 
   const onClienteChange = (value) => {
     setSelectedCliente(value);
   };
 
-  const onQuartoChange = (value) => {
-    setSelectedQuarto(value);
-  };
-
   useEffect(() => {
     if (onEdit) {
       const cliente = clients.find((c) => c.cpf === onEdit.cpf_cliente);
       setSelectedCliente(cliente.id);
-      setSelectedQuarto(onEdit.id_quarto);
       setDataReserva(onEdit.data_reserva);
       setDataEntrada(onEdit.data_entrada);
       setDataSaida(onEdit.data_saida);
@@ -105,17 +100,16 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
 
     if (
       !selectedCliente ||
+      !valor ||
       !dataReserva ||
       !dataEntrada ||
       !dataSaida ||
-      !selectedQuarto ||
-      !valor
+      !idQuarto 
     ) {
       return toast.warn('Preencha todos os campos!');
     }
 
     const cpf_cliente = clients.find((c) => c.id === selectedCliente)?.cpf;
-    const id_quarto = selectedQuarto;
 
     if (onEdit) {
       await axios
@@ -124,7 +118,7 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
           data_reserva: dataReserva,
           data_entrada: dataEntrada,
           data_saida: dataSaida,
-          id_quarto,
+          id_quarto: idQuarto,
           valor: valor,
         })
         .then(({ data }) => toast.success(data))
@@ -136,7 +130,7 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
           data_reserva: dataReserva,
           data_entrada: dataEntrada,
           data_saida: dataSaida,
-          id_quarto,
+          id_quarto: idQuarto,
           valor: valor,
         })
         .then(({ data }) => toast.success(data))
@@ -144,10 +138,10 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
     }
 
     setSelectedCliente("");
-    setSelectedQuarto("");
     setDataReserva("");
     setDataEntrada("");
     setDataSaida("");
+    setIdQuarto("");
     setValor("");
 
     setOnEdit(null);
@@ -155,12 +149,7 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
   };
 
   return (
-    <FormContainer
-      action="/cadastrar_cliente.php"
-      method="POST"
-      ref={ref}
-      onSubmit={handleSubmit}
-    >
+    <FormContainer>
       <InputArea>
         <Label>Nome do cliente</Label>
         <Select
