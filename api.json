@@ -6,47 +6,43 @@
       "senha": "funcionario123"
     }
   ],
-  "clientes": [
-    {
-      "nome": "João Silva",
-      "email": "joao@email.com",
-      "telefone": "(11) 1234-5678",
-      "cpf": "123.456.789-00",
-      "hospedado": true,
-      "id": 1
-    },
-    {
-      "nome": "Maria Souza",
-      "email": "maria@email.com",
-      "telefone": "(21) 9876-5432",
-      "cpf": "987.654.321-00",
-      "hospedado": true,
-      "id": 2
-    },
-    {
-      "nome": "Pedro Oliveira",
-      "email": "pedro@email.com",
-      "telefone": "(31) 1111-2222",
-      "cpf": "111.222.333-44",
-      "hospedado": true,
-      "id": 3
-    },
-    {
-      "nome": "teste",
-      "email": "teste@teste.com",
-      "telefone": "52654656",
-      "cpf": "64655",
-      "hospedado": true,
-      "id": 4
-    }
-  ],
+  "clientes": {
+    "listar.php": [
+      {
+        "nome": "João Silva",
+        "email": "joao@email.com",
+        "telefone": "(11) 1234-5678",
+        "cpf": "123.456.789-00",
+        "hospedado": true,
+        "id": 1
+      },
+      {
+        "nome": "Maria Souza",
+        "email": "maria@email.com",
+        "telefone": "(21) 9876-5432",
+        "cpf": "987.654.321-00",
+        "hospedado": true,
+        "id": 2
+      },
+      {
+        "nome": "Pedro Oliveira",
+        "email": "pedro@email.com",
+        "telefone": "(31) 1111-2222",
+        "cpf": "111.222.333-44",
+        "hospedado": true,
+        "id": 3
+      },
+      {
+        "nome": "Maria Souza",
+        "email": "maria@email.com",
+        "telefone": "(21) 9876-5432",
+        "cpf": "987.654.321-00",
+        "hospedado": false,
+        "id": 5
+      }
+    ]
+  },
   "quartos": [
-    {
-      "capacidade": "5",
-      "preco": "24.98",
-      "disponivel": "",
-      "id": 6
-    },
     {
       "capacidade": "5",
       "preco": "24.98",
@@ -70,6 +66,12 @@
       "preco": "200",
       "disponivel": true,
       "id": 11
+    },
+    {
+      "capacidade": "5",
+      "preco": "250",
+      "disponivel": false,
+      "id": 12
     }
   ],
   "reservas": [
