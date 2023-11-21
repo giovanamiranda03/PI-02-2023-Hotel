@@ -42,12 +42,15 @@ export const Td = styled.td`
 
 const Grid = ({ clients, setClients, setOnEdit }) => {
   const handleEdit = (item) => {
+    console.log(item)
     setOnEdit(item);
   };
 
   const handleDelete = async (id) => {
     await axios
-      .delete("http://localhost:8080/hotel-api/clientes/excluir.php" + id)
+      .delete(`${process.env.API_URL}/clientes/excluir.php`, {
+        id
+      })
       .then(({ data }) => {
         const newArray = clients.filter((user) => user.id !== id);
 
@@ -66,7 +69,7 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
         <Tr>
           <Th>Nome</Th>
           <Th>Email</Th>
-          <Th>Fone</Th>
+          <Th>Telefone</Th>
           <Th>CPF</Th>
           <Th>Ações</Th>
         </Tr>
@@ -76,7 +79,7 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
           <Tr key={i}>
             <Td>{item.nome}</Td>
             <Td>{item.email}</Td>
-            <Td>{item.fone}</Td>
+            <Td>{item.telefone}</Td>
             <Td onlyWeb>{item.cpf}</Td>
             <Td alignCenter>
               <FaEdit onClick={() => handleEdit(item)} />
