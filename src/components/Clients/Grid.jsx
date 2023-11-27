@@ -40,6 +40,11 @@ export const Td = styled.td`
   }
 `;
 
+const ContainerIcon = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
 const Grid = ({ clients, setClients, setOnEdit }) => {
   const handleEdit = (item) => {
     console.log(item)
@@ -81,14 +86,16 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
             <Td>{item.email}</Td>
             <Td>{item.telefone}</Td>
             <Td onlyWeb>{item.cpf}</Td>
-            <Td alignCenter>
-              <FaEdit onClick={() => handleEdit(item)} />
-              <FaTrash onClick={() => handleDelete(item.id)} />
+            <ContainerIcon>
+              <Td alignCenter>
+                <FaEdit onClick={() => handleEdit(item)} />
+                <FaTrash onClick={() => handleDelete(item.id)} />
             </Td>
+            </ContainerIcon>
           </Tr>
         ))}
-      </Tbody>
-    </Table>
+    </Tbody>
+    </Table >
   );
 };
 
