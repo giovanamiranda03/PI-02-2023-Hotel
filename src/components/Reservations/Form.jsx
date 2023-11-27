@@ -1,16 +1,17 @@
 import axios from 'axios';
-import React, { ref, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 const FormContainer = styled.form`
-  max-width: 1200px;
+  max-width: 1024px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 60px;
-  row-gap: 20px;
-  padding: 30px;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 20px 60px;
+  padding: 20px 100px;
   background-color: #16161a;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
@@ -48,12 +49,11 @@ const Select = styled.select`
   color: #fff;
 `;
 
-
 const Label = styled.label``;
 
 const Button = styled.button`
   flex: 1 0 2.5rem;
-  padding: 0 10px;
+  padding: 0 2.5rem;
   cursor: pointer;
   border-radius: 5px;
   border: none;
@@ -73,76 +73,99 @@ const Button = styled.button`
 
 const LabelButton = styled.label`
   color: #16161a;
-`
+`;
 
 const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
-  const [selectedCliente, setSelectedCliente] = useState("");
-  const [dataEntrada, setDataEntrada] = useState("");
-  const [dataSaida, setDataSaida] = useState("");
-  const [idQuarto, setIdQuarto] = useState("");
-  const [valor, setValor] = useState("");
+  const [reservation, setReservation] = useState({
+    id: '',
+    id_cliente: '',
+    id_quarto: '',
+    data_entrada: '',
+    data_saida: '',
+    forma_pagamento: '',
+  });
+  const [selectedCliente, setSelectedCliente] = useState('');
+  const [selectedQuarto, setSelectedQuarto] = useState('');
+  const [selectedPagamento, setSelectedPagamento] = useState('');
+  const ref = useRef();
+
+  useEffect(() => {
+    if (onEdit) {
+      setReservation({
+        id: onEdit.id,
+        id_cliente: onEdit.id_cliente,
+        id_quarto: onEdit.id_quarto,
+        data_entrada: onEdit.data_entrada,
+        data_saida: onEdit.data_saida,
+        forma_pagamento: onEdit.forma_pagamento,
+      });
+      setSelectedCliente(onEdit.id_cliente);
+      setSelectedQuarto(onEdit.id_quarto);
+      setSelectedPagamento(onEdit.forma_pagamento);
+    }
+  }, [onEdit, ref]);
 
   const onClienteChange = (value) => {
     setSelectedCliente(value);
   };
 
-  useEffect(() => {
-    if (onEdit) {
-      const cliente = clients.find((c) => c.cpf === onEdit.cpf_cliente);
-      setSelectedCliente(cliente.id);
-      setDataEntrada(onEdit.data_entrada);
-      setDataSaida(onEdit.data_saida);
-      setValor(onEdit.valor);
-    }
-  }, [onEdit, clients]);
+  const onQuartoChange = (value) => {
+    setSelectedQuarto(value);
+  };
+
+  const onPagamentoChange = (value) => {
+    setSelectedPagamento(value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !selectedCliente ||
-      !valor ||
-      !dataEntrada ||
-      !dataSaida ||
-      !idQuarto
-    ) {
-      return toast.warn('Preencha todos os campos!');
+    try {
+      const reserva = ref.current;
+      if (
+        !reserva.id_cliente ||
+        !reserva.id_quarto ||
+        !reserva.data_entrada ||
+        !reserva.data_saida ||
+        !reserva.forma_pagamento
+      ) {
+        return toast.warn('Preencha todos os campos!');
+      }
+
+      if (onEdit) {
+        await axios.put(`${process.env.REACT_APP_API_URL}/reservas/atualizar.php`, {
+          id: reserva.id,
+          id_cliente: reserva.id_cliente,
+          id_quarto: reserva.id_quarto,
+          data_entrada: reserva.data_entrada,
+          data_saida: reserva.data_saida,
+          forma_pagamento: reserva.forma_pagamento,
+        });
+        toast.success("Reserva atualizada");
+      } else {
+        await axios.post(`${process.env.REACT_APP_API_URL}/reservas/cadastrar.php`, {
+          id_cliente: reserva.id_cliente,
+          id_quarto: reserva.id_quarto,
+          data_entrada: reserva.data_entrada,
+          data_saida: reserva.data_saida,
+          forma_pagamento: reserva.forma_pagamento,
+        });
+        toast.success("Reserva cadastrada");
+      }
+      setReservation({
+        id_cliente: '',
+        id_quarto: '',
+        data_entrada: '',
+        data_saida: '',
+        forma_pagamento: '',
+      });
+
+      setOnEdit(null);
+      getReservations();
+    } catch (error) {
+      console.error('Erro ao processar requisição:', error);
+      toast.error('Erro ao processar a requisição. Tente novamente.');
     }
-
-    const cpf_cliente = clients.find((c) => c.id === selectedCliente)?.cpf;
-
-    if (onEdit) {
-      await axios
-        .put(`http://localhost:3000/reservas/${onEdit.id}`, {
-          cpf_cliente,
-          data_entrada: dataEntrada,
-          data_saida: dataSaida,
-          id_quarto: idQuarto,
-          valor: valor,
-        })
-        .then(({ data }) => toast.success(data))
-        .catch(({ data }) => toast.error(data));
-    } else {
-      await axios
-        .post('http://localhost:3000/reservas', {
-          cpf_cliente,
-          data_entrada: dataEntrada,
-          data_saida: dataSaida,
-          id_quarto: idQuarto,
-          valor: valor,
-        })
-        .then(({ data }) => toast.success(data))
-        .catch(({ data }) => toast.error(data));
-    }
-
-    setSelectedCliente("");
-    setDataEntrada("");
-    setDataSaida("");
-    setIdQuarto("");
-    setValor("");
-
-    setOnEdit(null);
-    getReservations();
   };
 
   return (
@@ -152,9 +175,9 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
         <Select
           name="id_cliente"
           value={selectedCliente}
-          onChange={e => onClienteChange(e.target.value)}
+          onChange={(e) => onClienteChange(e.target.value)}
         >
-          {clients.map(cliente => (
+          {clients && clients.map((cliente) => (
             <option key={cliente.id} value={cliente.id}>
               {cliente.nome}
             </option>
@@ -162,20 +185,53 @@ const Form = ({ getReservations, clients, rooms, onEdit, setOnEdit }) => {
         </Select>
       </InputArea>
       <InputArea>
+        <Label>Número do quarto</Label>
+        <Select
+          name="id_quarto"
+          value={selectedQuarto}
+          onChange={(e) => onQuartoChange(e.target.value)}
+        >
+          {rooms && rooms.map((room) => (
+            <option key={room.id} value={room.id}>
+              {room.id}
+            </option>
+          ))}
+        </Select>
+      </InputArea>
+      <InputArea>
         <Label>Data de entrada</Label>
-        <Input placeholder="Data da entrada" name="data_entrada" type="date" />
+        <Input
+          placeholder="Data da entrada"
+          name="data_entrada"
+          type="date"
+          value={reservation.data_entrada}
+          onChange={(e) => setReservation({ ...reservation, data_entrada: e.target.value })}
+        />
       </InputArea>
       <InputArea>
         <Label>Data da saída</Label>
-        <Input placeholder="Data de saída" name="data_saida" type="date" />
+        <Input
+          placeholder="Data de saída"
+          name="data_saida"
+          type="date"
+          value={reservation.data_saida}
+          onChange={(e) => setReservation({ ...reservation, data_saida: e.target.value })}
+        />
       </InputArea>
       <InputArea>
-        <Label>Número do quarto</Label>
-        <Input placeholder="Insira o numero do quarto" name="id_quarto" type="number" />
-      </InputArea>
-      <InputArea>
-        <Label>Valor</Label>
-        <Input placeholder="Insira o valor" name="valor" type="number" step="0.1" />
+        <Label>Forma de pagamento</Label>
+        <Select
+          name="forma_pagamento"
+          value={selectedPagamento}
+          onChange={(e) => onPagamentoChange(e.target.value)}
+        >
+          <option value="" disabled hidden>
+            Escolha uma opção
+          </option>
+          <option value="2">Dinheiro</option>
+          <option value="1">Cartão de Crédito</option>
+          <option value="0">Cartão de Débito</option>
+        </Select>
       </InputArea>
       <InputArea>
         <LabelButton>.</LabelButton>

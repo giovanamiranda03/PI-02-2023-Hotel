@@ -10,9 +10,8 @@ const FormContainer = styled.form`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  column-gap: 60px;
-  row-gap: 20px;
-  padding: 20px 100px;
+  gap: 20px 60px;
+  padding: 20px 170px;
   background-color: #16161a;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;

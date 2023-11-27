@@ -22,7 +22,7 @@ export default function Reservations() {
 
   const getReservations = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/reservas");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/reservas/listar.php`);
       setReservations(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
     } catch (error) {
       toast.error(error);
@@ -31,7 +31,7 @@ export default function Reservations() {
 
   const getClients = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/clientes");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/clientes/listar.php`);
       setClients(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
     } catch (error) {
       toast.error(error);

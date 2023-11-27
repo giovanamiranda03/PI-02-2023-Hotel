@@ -7,14 +7,14 @@ import styled from "styled-components";
 const Table = styled.table`
   width: 100%;
   background-color: #16161A;
-  padding: 20px;
   margin-top: 20px;
-  box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px; 
   word-break: break-all;
 `;
 
-export const Thead = styled.thead``;
+export const Thead = styled.thead`
+  background-color: #f5d156;
+`;
 
 export const Tbody = styled.tbody``;
 
@@ -22,8 +22,8 @@ export const Tr = styled.tr``;
 
 export const Th = styled.th`
   text-align: start;
-  border-bottom: inset;
-  padding-bottom: 5px;
+  padding: 5px;
+  color: #333;
 
   @media (max-width: 500px) {
     ${(props) => props.onlyWeb && "display: none"}
@@ -88,8 +88,8 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
             <Td onlyWeb>{item.cpf}</Td>
             <ContainerIcon>
               <Td alignCenter>
-                <FaEdit onClick={() => handleEdit(item)} />
-                <FaTrash onClick={() => handleDelete(item.id)} />
+                <FaEdit color="#1089E8" onClick={() => handleEdit(item)} />
+                <FaTrash color="#D42626"  onClick={() => handleDelete(item.id)} />
             </Td>
             </ContainerIcon>
           </Tr>
