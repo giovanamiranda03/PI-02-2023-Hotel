@@ -6,10 +6,8 @@ import styled from "styled-components";
 
 const Table = styled.table`
   width: 100%;
-  background-color: #16161A;
-  padding: 20px;
+  background-color: #16161A;  
   margin-top: 20px;
-  box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
   word-break: break-all;
 `;
