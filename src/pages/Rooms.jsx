@@ -21,7 +21,7 @@ export default function Rooms() {
 
   const getRooms = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/hotel-api/quartos/listar.php");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/quartos/listar.php`);
       setRooms(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
     } catch (error) {
       toast.error(error);
