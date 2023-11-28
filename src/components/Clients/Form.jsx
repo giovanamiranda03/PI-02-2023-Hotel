@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -66,26 +66,27 @@ const LabelButton = styled.label`
 `
 
 const Form = ({ getClients, onEdit, setOnEdit }) => {
-  const [client, setclient] = useState({ id: '', nome: '', email: '', telefone: '', cpf: '' })
   const ref = useRef();
 
   useEffect(() => {
     if (onEdit) {
-      setclient({
-        id: onEdit.id_cliente,
-        nome: onEdit.nome,
-        email: onEdit.email,
-        telefone: onEdit.telefone,
-        cpf: onEdit.cpf,
-      })
+      ref.current.nome.value = onEdit.nome;
+      ref.current.email.value = onEdit.email;
+      ref.current.telefone.value = onEdit.telefone;
+      ref.current.cpf.value = onEdit.cpf;
     }
-  }, [onEdit, ref]);
+  }, [onEdit]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const client = ref.current;
-    console.log(client)
+    const id = onEdit?.id_cliente;
+    const nome = client.nome.value;
+    const email = client.email.value;
+    const telefone = client.telefone.value;
+    const cpf = client.cpf.value;
+
     if (
       !client.nome ||
       !client.email ||
@@ -96,28 +97,35 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     }
 
     if (onEdit) {
-      await axios
-        .put(`${process.env.REACT_APP_API_URL}/clientes/atualizar.php`, {
-          id: client.id,
-          nome: client.nome,
-          email: client.email,
-          telefone: client.telefone,
-          cpf: client.cpf,
-        })
-        .then(({ data }) => toast.success("Cliente atualizado"))
-        .catch(({ data }) => toast.error(data));
-    } else {
-      await axios
-        .post(`${process.env.REACT_APP_API_URL}/clientes/cadastrar.php`, {
-          nome: client.nome,
-          email: client.email,
-          telefone: client.telefone,
-          cpf: client.cpf,
-        })
-        .then(({ data }) => toast.success("Cliente cadastrado"))
-        .catch(({ data }) => toast.error(data));
+      try {
+        console.log("teste")
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}/clientes/atualizar.php`, {
+          id_cliente: id,
+          nome: nome,
+          email: email,
+          fone: telefone,
+          cpf: cpf,
+        });
+        toast.success(response.data.message);
+      }
+      catch (err) {
+        toast.error(err.response.data.message);
+      }
     }
-    setclient({ id: '', nome: '', email: '', telefone: '', cpf: '' });
+    else {
+        try {
+          const response = await axios.post(`${process.env.REACT_APP_API_URL}/clientes/cadastrar.php`, {
+            nome: nome,
+            email: email,
+            fone: telefone,
+            cpf: cpf,
+          });
+          toast.success(response.data.message);
+        }
+        catch (err) {
+          toast.error(err.response.data.message);
+        }
+    }
 
     setOnEdit(null);
     getClients();
@@ -127,23 +135,23 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     <FormContainer onSubmit={handleSubmit} ref={ref}>
       <InputArea>
         <Label>Nome</Label>
-        <Input placeholder="Insira seu nome" name="nome" value={client.nome}
-          onChange={(e) => setclient((prev) => ({ ...prev, nome: e.target.value }))} />
+        <Input placeholder="Insira seu nome" name="nome"
+        />
       </InputArea>
       <InputArea>
         <Label>E-mail</Label>
-        <Input placeholder="Insira seu e-mail" name="email" type="email" value={client.email}
-          onChange={(e) => setclient((prev) => ({ ...prev, email: e.target.value }))} />
+        <Input placeholder="Insira seu e-mail" name="email" type="email"
+        />
       </InputArea>
       <InputArea>
         <Label>CPF</Label>
-        <Input placeholder="Insira seu CPF" name="cpf" value={client.cpf}
-          onChange={(e) => setclient((prev) => ({ ...prev, cpf: e.target.value }))} />
+        <Input placeholder="Insira seu CPF" name="cpf"
+        />
       </InputArea>
       <InputArea>
         <Label>Telefone</Label>
-        <Input placeholder="Insira o telefone" name="telefone" value={client.telefone}
-          onChange={(e) => setclient((prev) => ({ ...prev, telefone: e.target.value }))} />
+        <Input placeholder="Insira o telefone" name="telefone"
+        />
       </InputArea>
       <InputArea>
         <LabelButton>.</LabelButton>

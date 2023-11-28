@@ -16,7 +16,9 @@ const Table = styled.table`
 
 export const Thead = styled.thead``;
 
-export const Tbody = styled.tbody``;
+export const Tbody = styled.tbody`
+
+`;
 
 export const Tr = styled.tr``;
 
@@ -42,23 +44,19 @@ export const Td = styled.td`
 
 const Grid = ({ clients, setClients, setOnEdit }) => {
   const handleEdit = (item) => {
-    console.log(item)
     setOnEdit(item);
   };
 
   const handleDelete = async (id) => {
-    await axios
-      .delete(`${process.env.API_URL}/clientes/excluir.php`, {
-        id
-      })
-      .then(({ data }) => {
-        const newArray = clients.filter((user) => user.id !== id);
-
-        setClients(newArray);
-        toast.success(data);
-      })
-      .catch(({ data }) => toast.error(data));
-
+    console.log(id);
+    try {
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}/clientes/excluir.php`, { data: { id_cliente: id }, });
+      const newClients = clients.filter((item) => item.id_cliente !== id);
+      setClients(newClients);
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
     setOnEdit(null);
   };
 
@@ -67,26 +65,32 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
     <Table>
       <Thead>
         <Tr>
+          <Th>ID</Th>
           <Th>Nome</Th>
           <Th>Email</Th>
-          <Th>Telefone</Th>
           <Th>CPF</Th>
+          <Th>Telefone</Th>
+          <Th>Hospedado</Th>
           <Th>Ações</Th>
         </Tr>
       </Thead>
       <Tbody>
-        {clients.map((item, i) => (
-          <Tr key={i}>
-            <Td>{item.nome}</Td>
-            <Td>{item.email}</Td>
-            <Td>{item.telefone}</Td>
-            <Td onlyWeb>{item.cpf}</Td>
-            <Td alignCenter>
-              <FaEdit onClick={() => handleEdit(item)} />
-              <FaTrash onClick={() => handleDelete(item.id)} />
-            </Td>
-          </Tr>
-        ))}
+        {clients
+          .sort((a, b) => a.id_cliente - b.id_cliente)
+          .map((item, i) => (
+            <Tr key={i}>
+              <Td>{item.id_cliente}</Td>
+              <Td>{item.nome}</Td>
+              <Td>{item.email}</Td>
+              <Td onlyWeb>{item.cpf}</Td>
+              <Td onlyWeb>{item.telefone}</Td>
+              <Td>{item.hospedado ? "Sim" : "Não"}</Td>
+              <Td alignCenter>
+                <FaEdit onClick={() => handleEdit(item)} />
+                <FaTrash onClick={() => handleDelete(item.id_cliente)} />
+              </Td>
+            </Tr>
+          ))}
       </Tbody>
     </Table>
   );
