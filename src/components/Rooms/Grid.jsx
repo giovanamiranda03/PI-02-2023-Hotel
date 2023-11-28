@@ -6,15 +6,15 @@ import styled from "styled-components";
 
 const Table = styled.table`
   width: 100%;
-  background-color: #16161A;
-  padding: 20px;
+  background-color: #16161A;  
   margin-top: 20px;
-  box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
   word-break: break-all;
 `;
 
-export const Thead = styled.thead``;
+export const Thead = styled.thead`
+  background-color: #f5d156;
+`;
 
 export const Tbody = styled.tbody``;
 
@@ -22,8 +22,8 @@ export const Tr = styled.tr``;
 
 export const Th = styled.th`
   text-align: start;
-  border-bottom: inset;
-  padding-bottom: 5px;
+  padding: 5px;
+  color: #333;
 
   @media (max-width: 500px) {
     ${(props) => props.onlyWeb && "display: none"}
@@ -47,7 +47,9 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
 
   const handleDelete = async (id) => {
     await axios
-      .delete("http://localhost:8080/hotel-api/quartos/excluir.php")
+    .delete(`${process.env.API_URL}/quartos/excluir.php`, {
+      id
+    })
       .then(({ data }) => {
         const newArray = rooms.filter((user) => user.id !== id);
 

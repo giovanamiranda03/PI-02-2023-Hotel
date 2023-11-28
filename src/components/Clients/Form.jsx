@@ -98,7 +98,6 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
 
     if (onEdit) {
       try {
-        console.log("teste")
         const response = await axios.put(`${process.env.REACT_APP_API_URL}/clientes/atualizar.php`, {
           id_cliente: id,
           nome: nome,
@@ -113,18 +112,18 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
       }
     }
     else {
-        try {
-          const response = await axios.post(`${process.env.REACT_APP_API_URL}/clientes/cadastrar.php`, {
-            nome: nome,
-            email: email,
-            fone: telefone,
-            cpf: cpf,
-          });
-          toast.success(response.data.message);
-        }
-        catch (err) {
-          toast.error(err.response.data.message);
-        }
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/clientes/cadastrar.php`, {
+          nome: nome,
+          email: email,
+          fone: telefone,
+          cpf: cpf,
+        });
+        toast.success(response.data.message);
+      }
+      catch (err) {
+        toast.error(err.response.data.message);
+      }
     }
 
     setOnEdit(null);

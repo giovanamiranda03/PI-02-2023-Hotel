@@ -73,7 +73,7 @@ const Footer = styled.img`
 
 const Title = styled.h4``;
 
-export default function Menu() {
+export default function Home() {
   return (
     <>
       <Container>

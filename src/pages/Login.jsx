@@ -1,143 +1,200 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import loginImage from '../assets/loginImage.svg';
+import logo from '../assets/logo.svg';
+import loginImage from '../assets/loginImage.svg'
 
-const MainContainer = styled.div`
-  width: 50%;
-  position: relative;
-  background-color: #4a5568;
+const ContainerLogin = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  height: 100vh;
 `;
 
-const FlexContainer = styled.div`
-  position: absolute;
-  display: inline-flex;
-  justify-content: start;
-  align-items: start;
+const LeftSide = styled.div`
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+`;
+
+const LeftContent = styled.main`
+  display: flex;
+  flex-direction: column;
+  margin-top: 7rem;
   gap: 2.5rem;
+  width: 100%;
+  max-width: 24rem;
 `;
 
-const SidePanel = styled.div`
-  width: 50%;
-  background-color: #4a5568; 
-`;
-
-const ContentContainer = styled(FlexContainer)`
-  flex-direction: column;
-  left: 104px;
-  top: 131px;
-  gap: 53px;
-`;
-
-const Image = styled.img`
-  width: 170px;
-  height: 167px;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-const FlexColumn = styled.div`
+const LeftHeader = styled.header`
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  gap: 42px; 
+  gap: 1rem;
+  width: 100%;
+  max-width: 21.875rem;
 `;
 
-const Text = styled.div`
-  color: white;
-  font-family: 'Inter', sans-serif;
-  font-size: 32px;
-  font-weight: bold;
-`;
-
-const SubText = styled(Text)`
-  width: 479px;
-  opacity: 0.75;
-  font-size: 1rem;
-`;
-
-const InputContainer = styled.div`
-  height: 82px;
+const Form = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
   gap: 1rem;
 `;
 
-const InputBox = styled.div`
-  width: 454px;
-  height: 53px;
+const FormEmail = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const FormPassword = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   position: relative;
-  background-color: #1a202c; 
+`;
+
+const RightSide = styled.img`
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
+const Title = styled.h1`
+  color: white;
+  font-weight: bold;
+`;
+
+const SubText = styled(Title)`
+  font-weight: normal;
+  font-size: 1rem;
+  color: #bbb;
+`;
+
+const Label = styled.label`
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #fff;
 `;
 
 const Input = styled.input`
-  width: 454px;
-  height: 53px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #374151;
-  border-radius: 8px;
-  border: 1px solid #a0aec0; 
+  padding: 1rem 2rem;
+  font-size: 0.875rem;
+  background-color: #16161A;
+  color: #fff;
+  line-height: 1.5;
+  border: 1px solid #bbb;
+  border-radius: 0.375rem;
+  outline: none;
+
+  &::placeholder {
+    color: #cbd5e0;
+  }
+
+  &:focus {
+    border-color: #f5d156;
+    outline: 0;
+  }
+
+  &.error {
+    border-color: #e53e3e;
+  }
+
+  &.error:focus {
+    border-color: #e53e3e;
+  }
 `;
 
-const Placeholder = styled.div`
-  position: absolute;
-  left: 18.16px;
-  top: 15.98px;
-  color: #718096;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1rem;
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
 `;
 
-const ButtonContainer = styled.button`
-  width: 454px;
-  height: 53px;
-  position: relative;
-  background-color: #F5D156;
-  border-radius: 8px;
-  color: #1a202c;
+const Button = styled.button`
+  background-color: #f5d156;
+  color: #333;
+  font-weight: bold;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 0.375rem;
+  outline: none;
+
+  &:hover {
+    background-color: #F5D189;
+  }
+
+  &:focus {
+    border-width: 2px;
+    border-color: #f5d156;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
 `;
 
 export default function Login() {
-  return (
-    <MainContainer>
-      <FlexContainer style={{ left: '-13px', top: '0' }}>
-        <SidePanel />
-        <ContentContainer>
-          <FlexColumn style={{ height: '328px', gap: '42px' }}>
-            <div>
-              <Image src={loginImage} alt="Imagem" />
-            </div>
-            <FlexColumn style={{ gap: '3.5rem' }}>
-              <Text>Bem vindo ao ALVERG!</Text>
-              <SubText>Lorem ipsum dolor sit amet...</SubText>
-            </FlexColumn>
-          </FlexColumn>
-          <FlexColumn style={{ gap: '72px' }}>
-            <InputContainer>
-              <Text style={{ fontSize: '1.25rem' }}>Email</Text>
-              <InputBox>
-                <Input />
-                <Placeholder>Insira seu email</Placeholder>
-              </InputBox>
-            </InputContainer>
-            <InputContainer>
-              <Text style={{ fontSize: '1.25rem' }}>Senha</Text>
-              <InputBox>
-                <Input />
-                <Placeholder>Insira sua senha</Placeholder>
-              </InputBox>
-            </InputContainer>
-            <ButtonContainer>
-              Entrar
-            </ButtonContainer>
-          </FlexColumn>
-        </ContentContainer>
-      </FlexContainer>
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-    </MainContainer>
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (email === 'teste@teste.com' && password === 'teste123') {
+      navigate('/');
+    } else {
+      setError('Credenciais inválidas. Tente novamente.');
+    }
+  };
+
+  return (
+    <ContainerLogin>
+        <LeftSide>
+          <img src={logo} alt="Logo Hotel" />
+          <LeftContent>
+            <LeftHeader>
+              <Title>Bem-vindo ao Hotel ALVERG</Title>
+              <SubText>
+                Faça login para começar a gerenciar o sistema do hotel ALVERG.
+              </SubText>
+            </LeftHeader>
+            <Form onSubmit={handleLogin}>
+              <FormEmail>
+                <Label htmlFor="email">E-mail</Label>
+                <Input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Insira seu email"
+              />
+                {error.email && (
+                  <ErrorMessage>{error.email?.message}</ErrorMessage>
+                )}
+              </FormEmail>
+
+              <FormPassword>
+                <Label htmlFor="password">Senha</Label>
+                <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Insira sua senha"
+              />
+                {error.password && (
+                  <ErrorMessage>{error.password?.message}</ErrorMessage>
+                )}
+              </FormPassword>
+
+              <ButtonContainer onClick={handleLogin}>
+                <Button type="submit">Entrar</Button>
+              </ButtonContainer>
+            </Form>
+          </LeftContent>
+        </LeftSide>
+      <RightSide src={loginImage} alt="Imagem Hotel ALVERG"/>
+    </ContainerLogin>
   );
 }
-
