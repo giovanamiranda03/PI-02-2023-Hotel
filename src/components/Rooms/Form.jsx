@@ -60,7 +60,8 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  flex: 1 0 2.5rem;
+  width: 200px;
+  height: 44px;
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
@@ -165,6 +166,14 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
       <LineWrapper>
         <LineUp>
           <InputArea>
+            <Label>Número do quarto</Label>
+            <Input
+              type='number'
+              step=".01"
+              placeholder="Insira o número do quarto"
+            />
+          </InputArea>
+          <InputArea>
             <Label>Capacidade</Label>
             <Input
               type='number'
@@ -184,6 +193,8 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
               value={room.valor}
               onChange={(e) => setRoom((prev) => ({ ...prev, valor: e.target.value }))} />
           </InputArea>
+        </LineUp>
+        <LineDown>
           <InputArea>
             <Label>Disponível</Label>
             <Select
@@ -197,8 +208,6 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
             </Select>
 
           </InputArea>
-        </LineUp>
-        <LineDown>
           <InputArea>
             <LabelButton>.</LabelButton>
             <Button type="submit">SALVAR</Button>

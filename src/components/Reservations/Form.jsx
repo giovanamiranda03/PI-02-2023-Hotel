@@ -48,7 +48,8 @@ const InputArea = styled.div`
 `;
 
 const Input = styled.input`
-  flex: 1 0 2.5rem;
+  width: 180px;
+  height: 44px;
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
@@ -61,7 +62,8 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  flex: 1 0 2.5rem;
+  width: 200px;
+  height: 44px;
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
