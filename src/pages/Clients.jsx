@@ -4,9 +4,12 @@ import { ToastContainer, toast } from "react-toastify";
 import styled from "styled-components";
 import Form from "../components/Clients/Form";
 import Grid from "../components/Clients/Grid";
+import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 
-const Title = styled.h2``
+const Title = styled.div`
+  padding: 10px;
+`
 
 const PageContainer = styled.div`
   width: 100%;
@@ -34,7 +37,10 @@ export default function Clients() {
 
   return (
     <>
-      <Title>Clientes</Title>
+      <Header />
+      <Title>
+        <h2>Clientes</h2>
+      </Title>
       <Form onEdit={onEdit} setOnEdit={setOnEdit} getClients={getClients} />
       <Grid setOnEdit={setOnEdit} clients={clients} setClients={setClients} />
       <PageContainer>

@@ -8,9 +8,10 @@ const FormContainer = styled.form`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 60px;
-  row-gap: 20px;
-  padding: 30px;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 20px 60px;
+  padding: 20px 241px;
   background-color: #16161a;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
@@ -19,6 +20,26 @@ const FormContainer = styled.form`
     flex-direction: column;
     column-gap: 20px;
   }
+`;
+
+const LineUp = styled.div`
+  display: flex;
+  gap: 59px;
+  align-items: start;
+  justify-content: start;
+  margin-bottom: 16px;
+`;
+
+const LineDown = styled.div`
+  display: flex;
+  gap: 59px;
+  width: 100%;
+`;
+
+const LineWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const InputArea = styled.div`
@@ -44,6 +65,7 @@ const Label = styled.label``;
 const Button = styled.button`
   flex: 1 0 2.5rem;
   padding: 0 10px;
+  width: 200px;
   cursor: pointer;
   border-radius: 5px;
   border: none;
@@ -132,30 +154,36 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
 
   return (
     <FormContainer onSubmit={handleSubmit} ref={ref}>
-      <InputArea>
-        <Label>Nome</Label>
-        <Input placeholder="Insira seu nome" name="nome"
-        />
-      </InputArea>
-      <InputArea>
-        <Label>E-mail</Label>
-        <Input placeholder="Insira seu e-mail" name="email" type="email"
-        />
-      </InputArea>
-      <InputArea>
-        <Label>CPF</Label>
-        <Input placeholder="Insira seu CPF" name="cpf"
-        />
-      </InputArea>
-      <InputArea>
-        <Label>Telefone</Label>
-        <Input placeholder="Insira o telefone" name="telefone"
-        />
-      </InputArea>
-      <InputArea>
-        <LabelButton>.</LabelButton>
-        <Button type="submit">SALVAR</Button>
-      </InputArea>
+      <LineWrapper>
+        <LineUp>
+          <InputArea>
+            <Label>Nome</Label>
+            <Input placeholder="Insira seu nome" name="nome"
+            />
+          </InputArea>
+          <InputArea>
+            <Label>E-mail</Label>
+            <Input placeholder="Insira seu e-mail" name="email" type="email"
+            />
+          </InputArea>
+          <InputArea>
+            <Label>CPF</Label>
+            <Input placeholder="Insira seu CPF" name="cpf"
+            />
+          </InputArea>
+        </LineUp>
+        <LineDown>
+          <InputArea>
+            <Label>Telefone</Label>
+            <Input placeholder="Insira o telefone" name="telefone"
+            />
+          </InputArea>
+          <InputArea>
+            <LabelButton>.</LabelButton>
+            <Button type="submit">SALVAR</Button>
+          </InputArea>
+        </LineDown>
+      </LineWrapper>
     </FormContainer>
   );
 };

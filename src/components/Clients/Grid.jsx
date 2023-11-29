@@ -75,7 +75,6 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
           <Th>Email</Th>
           <Th>CPF</Th>
           <Th>Telefone</Th>
-          <Th>Hospedado</Th>
           <Th>Ações</Th>
         </Tr>
       </Thead>
@@ -89,7 +88,6 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
               <Td>{item.email}</Td>
               <Td onlyWeb>{item.cpf}</Td>
               <Td onlyWeb>{item.telefone}</Td>
-              <Td>{item.hospedado ? "Sim" : "Não"}</Td>
               <Td alignCenter>
                 <FaEdit onClick={() => handleEdit(item)} />
                 <FaTrash onClick={() => handleDelete(item.id_cliente)} />
