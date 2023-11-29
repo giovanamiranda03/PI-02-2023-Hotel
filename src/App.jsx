@@ -2,18 +2,17 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
-import Header from "./components/Header";
 import Clients from './pages/Clients';
-import Login from './pages/Login';
 import Home from './pages/Home';
+import Login from './pages/Login';
 import Reservations from './pages/Reservations';
 import Rooms from './pages/Rooms';
 import GlobalStyle from "./styles/global";
 
 const Container = styled.div`
   width: 100%;
+  height: 100vh;
   max-width: 1200px;
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +22,6 @@ const Container = styled.div`
 export default function App() {
   return (
     <>
-      {window.location.pathname !== '/login' && <Header />}
       <Container>
         <Router>
           <Routes>
