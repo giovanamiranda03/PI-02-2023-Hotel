@@ -4,14 +4,14 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 const FormContainer = styled.form`
-  max-width: 1024px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
   gap: 20px 60px;
-  padding: 20px 170px;
+  padding: 20px 241px;
   background-color: #16161a;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
@@ -22,6 +22,25 @@ const FormContainer = styled.form`
   }
 `;
 
+const LineUp = styled.div`
+  display: flex;
+  gap: 59px;
+  align-items: start;
+  justify-content: start;
+  margin-bottom: 16px;
+`;
+
+const LineDown = styled.div`
+  display: flex;
+  gap: 59px;
+  width: 100%;
+`;
+
+const LineWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 const InputArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,7 +73,8 @@ const Label = styled.label``;
 
 const Button = styled.button`
   flex: 1 0 2.5rem;
-  padding: 0 2.5rem;
+  padding: 0 10px;
+  width: 200px;
   cursor: pointer;
   border-radius: 5px;
   border: none;
@@ -77,7 +97,7 @@ const LabelButton = styled.label`
 `
 
 const Form = ({ getRooms, onEdit, setOnEdit }) => {
-  const [room, setRoom] = useState({ id: '', capacidade: '', valor: '', disponivel: ''})
+  const [room, setRoom] = useState({ id: '', capacidade: '', valor: '', disponivel: '' })
   const [selectedDisponivel, setSelectedDisponivel] = useState('')
   const ref = useRef();
 
@@ -99,7 +119,7 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
+
     try {
       const quarto = ref.current;
       if (
@@ -119,7 +139,7 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
             valor: quarto.valor,
             disponivel: quarto.disponivel,
           })
-          toast.success("Quarto atualizado");
+        toast.success("Quarto atualizado");
       } else {
         await axios
           .post(`${process.env.REACT_APP_API_URL}/quartos/cadastrar.php`, {
@@ -128,9 +148,9 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
             valor: quarto.valor,
             disponivel: quarto.disponivel,
           })
-          toast.success("Quarto cadastrado");
+        toast.success("Quarto cadastrado");
       }
-      setRoom({ id: '', capacidade: '', valor: '', disponivel: ''});
+      setRoom({ id: '', capacidade: '', valor: '', disponivel: '' });
 
       setOnEdit(null);
       getRooms();
@@ -142,43 +162,49 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
 
   return (
     <FormContainer onSubmit={handleSubmit} ref={ref}>
-      <InputArea>
-        <Label>Capacidade</Label>
-        <Input
-          type='number'
-          step=".01"
-          placeholder="Insira a capacidade"
-          name="capacidade"
-          value={room.capacidade}
-          onChange={(e) => setRoom((prev) => ({ ...prev, capacidade: e.target.value }))} />
-      </InputArea>
-      <InputArea>
-        <Label>Preço</Label>
-        <Input
-          type='number'
-          step=".01"
-          placeholder="Insira o preço da diária"
-          name="preco"
-          value={room.valor}
-          onChange={(e) => setRoom((prev) => ({ ...prev, valor: e.target.value }))} />
-      </InputArea>
-      <InputArea>
-        <Label>Disponível</Label>
-        <Select
-          name="disponivel"
-          value={selectedDisponivel}
-          onChange={(e) => onQuartoChange(e.target.value)}
-        >
-          <option value="" disabled hidden>Escolha uma opção</option>
-          <option value="1">Sim</option>
-          <option value="0">Não</option>
-        </Select>
+      <LineWrapper>
+        <LineUp>
+          <InputArea>
+            <Label>Capacidade</Label>
+            <Input
+              type='number'
+              step=".01"
+              placeholder="Insira a capacidade"
+              name="capacidade"
+              value={room.capacidade}
+              onChange={(e) => setRoom((prev) => ({ ...prev, capacidade: e.target.value }))} />
+          </InputArea>
+          <InputArea>
+            <Label>Preço</Label>
+            <Input
+              type='number'
+              step=".01"
+              placeholder="Insira o preço da diária"
+              name="preco"
+              value={room.valor}
+              onChange={(e) => setRoom((prev) => ({ ...prev, valor: e.target.value }))} />
+          </InputArea>
+          <InputArea>
+            <Label>Disponível</Label>
+            <Select
+              name="disponivel"
+              value={selectedDisponivel}
+              onChange={(e) => onQuartoChange(e.target.value)}
+            >
+              <option value="" disabled hidden>Escolha uma opção</option>
+              <option value="1">Sim</option>
+              <option value="0">Não</option>
+            </Select>
 
-      </InputArea>
-      <InputArea>
-        <LabelButton>.</LabelButton>
-        <Button type="submit">SALVAR</Button>
-      </InputArea>
+          </InputArea>
+        </LineUp>
+        <LineDown>
+          <InputArea>
+            <LabelButton>.</LabelButton>
+            <Button type="submit">SALVAR</Button>
+          </InputArea>
+        </LineDown>
+      </LineWrapper>
     </FormContainer>
   );
 };
