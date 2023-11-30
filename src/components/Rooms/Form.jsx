@@ -7,8 +7,7 @@ const FormContainer = styled.form`
   max-width: 1024px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: last baseline;
   justify-content: center;
   gap: 20px 60px;
   padding: 20px 170px;
@@ -54,7 +53,7 @@ const Label = styled.label``;
 
 const Button = styled.button`
   flex: 1 0 2.5rem;
-  padding: 0 2.5rem;
+  padding: 0.8rem 2.5rem;
   cursor: pointer;
   border-radius: 5px;
   border: none;
@@ -77,71 +76,74 @@ const LabelButton = styled.label`
 `
 
 const Form = ({ getRooms, onEdit, setOnEdit }) => {
-  const [room, setRoom] = useState({ id: '', capacidade: '', valor: '', disponivel: ''})
-  const [selectedDisponivel, setSelectedDisponivel] = useState('')
   const ref = useRef();
 
   useEffect(() => {
     if (onEdit) {
-      setRoom({
-        id: onEdit.id_quarto,
-        capacidade: onEdit.capacidade,
-        valor: onEdit.valor,
-        disponivel: onEdit.disponivel,
-      })
-      setSelectedDisponivel(onEdit.disponivel);
+      ref.current.numero.value = onEdit.numero_quarto;
+      ref.current.capacidade.value = onEdit.capacidade;
+      ref.current.diaria.value = onEdit.valor_diaria;
     }
-  }, [onEdit, ref]);
-
-  const onQuartoChange = value => {
-    setSelectedDisponivel(value);
-  };
+  }, [onEdit]);
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
-    try {
-      const quarto = ref.current;
-      if (
-        !quarto.id ||
-        !quarto.capacidade ||
-        !quarto.valor ||
-        !quarto.disponivel
-      ) {
-        return toast.warn('Preencha todos os campos!');
-      }
 
-      if (onEdit) {
-        await axios
-          .put(`${process.env.REACT_APP_API_URL}/quartos/atualizar.php`, {
-            id: quarto.id,
-            capacidade: quarto.capacidade,
-            valor: quarto.valor,
-            disponivel: quarto.disponivel,
-          })
-          toast.success("Quarto atualizado");
-      } else {
-        await axios
-          .post(`${process.env.REACT_APP_API_URL}/quartos/cadastrar.php`, {
-            id: quarto.id,
-            capacidade: quarto.capacidade,
-            valor: quarto.valor,
-            disponivel: quarto.disponivel,
-          })
-          toast.success("Quarto cadastrado");
-      }
-      setRoom({ id: '', capacidade: '', valor: '', disponivel: ''});
+    const quarto = ref.current;
+    const numero = quarto?.numero.value;
+    const capacidade = quarto?.capacidade.value;
+    const diaria = quarto?.diaria.value;
 
-      setOnEdit(null);
-      getRooms();
-    } catch (error) {
-      console.error('Erro ao processar requisição:', error);
-      toast.error('Erro ao processar a requisição. Tente novamente.');
+    if (
+      !numero ||
+      !capacidade ||
+      !diaria
+    ) {
+      return toast.warn('Preencha todos os campos!');
     }
+    if (onEdit) {
+      try {
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}/quartos/atualizar.php`, {
+          numero: numero,
+          capacidade: capacidade,
+          diaria: diaria
+        })
+        toast.success(response.data.message);
+      } catch (err) {
+        toast.error(err.response.data.message)
+      }
+    } else {
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/quartos/cadastrar.php`, {
+          numero: numero,
+          capacidade: capacidade,
+          diaria: diaria
+        })
+        toast.success(response.data.message);
+      } catch (err) {
+        toast.error(err.response.data.message)
+      }
+    }
+
+    if (ref.current) {
+      ref.current.reset()
+    }
+
+    setOnEdit(null);
+    getRooms();
   }
 
   return (
     <FormContainer onSubmit={handleSubmit} ref={ref}>
+      <InputArea>
+        <Label>Numero do quarto</Label>
+        <Input
+          type='number'
+          step="1"
+          placeholder="Insira o numero do quarto"
+          name="numero"
+        />
+      </InputArea>
       <InputArea>
         <Label>Capacidade</Label>
         <Input
@@ -149,34 +151,18 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
           step=".01"
           placeholder="Insira a capacidade"
           name="capacidade"
-          value={room.capacidade}
-          onChange={(e) => setRoom((prev) => ({ ...prev, capacidade: e.target.value }))} />
+        />
       </InputArea>
       <InputArea>
-        <Label>Preço</Label>
+        <Label>Diaria</Label>
         <Input
           type='number'
           step=".01"
           placeholder="Insira o preço da diária"
-          name="preco"
-          value={room.valor}
-          onChange={(e) => setRoom((prev) => ({ ...prev, valor: e.target.value }))} />
+          name="diaria"
+        />
       </InputArea>
       <InputArea>
-        <Label>Disponível</Label>
-        <Select
-          name="disponivel"
-          value={selectedDisponivel}
-          onChange={(e) => onQuartoChange(e.target.value)}
-        >
-          <option value="" disabled hidden>Escolha uma opção</option>
-          <option value="1">Sim</option>
-          <option value="0">Não</option>
-        </Select>
-
-      </InputArea>
-      <InputArea>
-        <LabelButton>.</LabelButton>
         <Button type="submit">SALVAR</Button>
       </InputArea>
     </FormContainer>

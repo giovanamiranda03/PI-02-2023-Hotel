@@ -53,7 +53,6 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
       const response = await axios.delete(`${process.env.REACT_APP_API_URL}/clientes/excluir.php`, { data: { id_cliente: id }, });
       const newClients = clients.filter((item) => item.id_cliente !== id);

@@ -82,16 +82,16 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
 
     const client = ref.current;
     const id = onEdit?.id_cliente;
-    const nome = client.nome.value;
-    const email = client.email.value;
-    const telefone = client.telefone.value;
-    const cpf = client.cpf.value;
+    const nome = client?.nome.value;
+    const email = client?.email.value;
+    const telefone = client?.telefone.value;
+    const cpf = client?.cpf.value;
 
     if (
-      !client.nome ||
-      !client.email ||
-      !client.telefone ||
-      !client.cpf
+      !nome ||
+      !email ||
+      !telefone ||
+      !cpf
     ) {
       return toast.warn('Preencha todos os campos!');
     }
@@ -122,10 +122,15 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
         toast.success(response.data.message);
       }
       catch (err) {
+        console.log(err)
         toast.error(err.response.data.message);
       }
     }
 
+
+    if (ref.current) {
+      ref.current.reset()
+    }
     setOnEdit(null);
     getClients();
   };

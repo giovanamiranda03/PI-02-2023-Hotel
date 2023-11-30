@@ -45,20 +45,21 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
     setOnEdit(item);
   };
 
-  const handleDelete = async (id) => {
-    await axios
-    .delete(`${process.env.API_URL}/quartos/excluir.php`, {
-      id
-    })
-      .then(({ data }) => {
-        const newArray = rooms.filter((user) => user.id !== id);
-
-        setRooms(newArray);
-        toast.success(data);
-      })
-      .catch(({ data }) => toast.error(data));
-
+  const handleDelete = async (numero) => {
+    try {
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}/quartos/excluir.php`, {
+        data: {
+          numero: numero,
+        }
+      });
+      const newRooms = rooms.filter((item) => item.numero_quarto !== numero);
+      setRooms(newRooms)
+      toast.success(response.data.message);
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
     setOnEdit(null);
+
   };
 
   return (
@@ -67,21 +68,21 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
         <Tr>
           <Th>N°Quarto</Th>
           <Th>Capacidade</Th>
-          <Th>Preço</Th>
+          <Th>Diaria</Th>
           <Th>Disponível</Th>
           <Th>Ações</Th>
         </Tr>
       </Thead>
       <Tbody>
-        {rooms.map((item, i) => (
+        {rooms.sort((a, b) => a.numero_quarto - b.numero_quarto).map((item, i) => (
           <Tr key={i}>
-            <Td >{item.id}</Td>
+            <Td >{item.numero_quarto}</Td>
             <Td >{item.capacidade}</Td>
-            <Td >{item.preco}</Td>
+            <Td >R$ {item.valor_diaria}</Td>
             <Td >{item.disponivel ? "Sim" : "Não"}</Td>
             <Td alignCenter >
               <FaEdit onClick={() => handleEdit(item)} />
-              <FaTrash onClick={() => handleDelete(item.id)} />
+              <FaTrash onClick={() => handleDelete(item.numero_quarto)} />
             </Td>
           </Tr>
         ))}
