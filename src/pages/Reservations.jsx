@@ -2,11 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import styled from "styled-components";
+import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 import Form from "../components/Reservations/Form";
 import Grid from "../components/Reservations/Grid";
 
-const Title = styled.h2``
+const Title = styled.div`
+  padding: 10px;
+`;
 
 const PageContainer = styled.div`
   width: 100%;
@@ -45,7 +48,10 @@ export default function Reservations() {
 
   return (
     <>
-      <Title>Reservas</Title>
+      <Header />
+      <Title>
+        <h2>Reservas</h2>
+      </Title>
       <Form onEdit={onEdit} setOnEdit={setOnEdit} getReservations={getReservations} clients={clients} />
       <Grid setOnEdit={setOnEdit} reservations={reservations} setReservations={setReservations} />
       <PageContainer>

@@ -2,11 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import styled from "styled-components";
+import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 import Form from "../components/Rooms/Form";
 import Grid from "../components/Rooms/Grid";
 
-const Title = styled.h2``
+const Title = styled.div`
+  padding: 10px;
+`
 
 const PageContainer = styled.div`
   width: 100%;
@@ -34,7 +37,10 @@ export default function Rooms() {
 
   return (
     <>
-      <Title>Quartos</Title>
+      <Header />
+      <Title>
+        <h2>Quartos</h2>
+      </Title>
       <Form onEdit={onEdit} setOnEdit={setOnEdit} getRooms={getRooms} />
       <Grid setOnEdit={setOnEdit} rooms={rooms} setRooms={setRooms} />
       <PageContainer>

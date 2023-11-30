@@ -4,6 +4,7 @@ import footerImage from '../assets/footerImage.svg';
 import hotelImage from '../assets/hotel.svg';
 import roomImage from '../assets/room.svg';
 import userImage from '../assets/user.svg';
+import Header from "../components/Header";
 
 const Container = styled.div`
   width: 100%;
@@ -12,7 +13,12 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 10px 10px 0 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Box = styled.div`
@@ -30,18 +36,31 @@ const Box = styled.div`
   gap: 20px;
   font-size: 22px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    margin: 20px auto;
+  }
 `;
 
 const Paragraph = styled.p`
   color: #ccc;
   text-align: center;
   font-size: 18px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const Image = styled.img`
   width: 3em;
   display: block;
   margin: 0 auto 0.5em;
+
+  @media (max-width: 768px) {
+    width: 2em;
+  }
 `;
 
 const Link = styled.a`
@@ -65,17 +84,35 @@ const Button = styled.button`
   &:hover {
     background-color: #F5D189;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 15px;
+  }
 `;
 
-const Footer = styled.img`
+const Footer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
   max-width: 1200px;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 `;
 
-const Title = styled.h4``;
+const Title = styled.h4`
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`;
 
 export default function Home() {
   return (
     <>
+      <Header />
       <Container>
         <Box>
           <Image src={userImage} alt="Ícone de usuário" />
@@ -102,7 +139,9 @@ export default function Home() {
           </Link>
         </Box>
       </Container>
-      <Footer src={footerImage} alt="Rodapé" />
+      <Footer>
+        <img src={footerImage} alt="Rodapé" />
+      </Footer>
     </>
   );
 }

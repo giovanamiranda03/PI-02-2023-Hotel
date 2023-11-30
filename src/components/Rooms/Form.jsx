@@ -4,13 +4,14 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 const FormContainer = styled.form`
-  max-width: 1024px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  align-items: last baseline;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
   gap: 20px 60px;
-  padding: 20px 170px;
+  padding: 20px 241px;
   background-color: #16161a;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
@@ -21,6 +22,25 @@ const FormContainer = styled.form`
   }
 `;
 
+const LineUp = styled.div`
+  display: flex;
+  gap: 59px;
+  align-items: start;
+  justify-content: start;
+  margin-bottom: 16px;
+`;
+
+const LineDown = styled.div`
+  display: flex;
+  gap: 59px;
+  width: 100%;
+`;
+
+const LineWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 const InputArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,7 +60,8 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  flex: 1 0 2.5rem;
+  width: 200px;
+  height: 44px;
   padding: 0 10px;
   border: 1px solid #bbb;
   border-radius: 5px;
@@ -53,7 +74,8 @@ const Label = styled.label``;
 
 const Button = styled.button`
   flex: 1 0 2.5rem;
-  padding: 0.8rem 2.5rem;
+  padding: 0 10px;
+  width: 200px;
   cursor: pointer;
   border-radius: 5px;
   border: none;

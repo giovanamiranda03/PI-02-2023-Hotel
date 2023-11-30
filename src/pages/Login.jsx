@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import loginImage from '../assets/loginImage.svg';
 import logo from '../assets/logo.svg';
-import loginImage from '../assets/loginImage.svg'
 
 const ContainerLogin = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
   height: 100vh;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const LeftSide = styled.div`
@@ -24,6 +28,11 @@ const LeftContent = styled.main`
   gap: 2.5rem;
   width: 100%;
   max-width: 24rem;
+
+  @media (max-width: 768px) {
+    margin-top: 3rem;
+    max-width: 90%;
+  }
 `;
 
 const LeftHeader = styled.header`
@@ -56,6 +65,11 @@ const FormPassword = styled.div`
 const RightSide = styled.img`
   background-size: cover;
   background-repeat: no-repeat;
+
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Title = styled.h1`
@@ -152,49 +166,49 @@ export default function Login() {
 
   return (
     <ContainerLogin>
-        <LeftSide>
-          <img src={logo} alt="Logo Hotel" />
-          <LeftContent>
-            <LeftHeader>
-              <Title>Bem-vindo ao Hotel ALVERG</Title>
-              <SubText>
-                Faça login para começar a gerenciar o sistema do hotel ALVERG.
-              </SubText>
-            </LeftHeader>
-            <Form onSubmit={handleLogin}>
-              <FormEmail>
-                <Label htmlFor="email">E-mail</Label>
-                <Input
+      <LeftSide>
+        <img src={logo} alt="Logo Hotel" />
+        <LeftContent>
+          <LeftHeader>
+            <Title>Bem-vindo ao Hotel ALVERG</Title>
+            <SubText>
+              Faça login para começar a gerenciar o sistema do hotel ALVERG.
+            </SubText>
+          </LeftHeader>
+          <Form onSubmit={handleLogin}>
+            <FormEmail>
+              <Label htmlFor="email">E-mail</Label>
+              <Input
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Insira seu email"
               />
-                {error.email && (
-                  <ErrorMessage>{error.email?.message}</ErrorMessage>
-                )}
-              </FormEmail>
+              {error.email && (
+                <ErrorMessage>{error.email?.message}</ErrorMessage>
+              )}
+            </FormEmail>
 
-              <FormPassword>
-                <Label htmlFor="password">Senha</Label>
-                <Input
+            <FormPassword>
+              <Label htmlFor="password">Senha</Label>
+              <Input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Insira sua senha"
               />
-                {error.password && (
-                  <ErrorMessage>{error.password?.message}</ErrorMessage>
-                )}
-              </FormPassword>
+              {error.password && (
+                <ErrorMessage>{error.password?.message}</ErrorMessage>
+              )}
+            </FormPassword>
 
-              <ButtonContainer onClick={handleLogin}>
-                <Button type="submit">Entrar</Button>
-              </ButtonContainer>
-            </Form>
-          </LeftContent>
-        </LeftSide>
-      <RightSide src={loginImage} alt="Imagem Hotel ALVERG"/>
+            <ButtonContainer onClick={handleLogin}>
+              <Button type="submit">Entrar</Button>
+            </ButtonContainer>
+          </Form>
+        </LeftContent>
+      </LeftSide>
+      <RightSide src={loginImage} alt="Imagem Hotel ALVERG" />
     </ContainerLogin>
   );
 }
