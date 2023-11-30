@@ -21,21 +21,11 @@ const PageContainer = styled.div`
 export default function Reservations() {
   const [reservations, setReservations] = useState([]);
   const [onEdit, setOnEdit] = useState(null);
-  const [clients, setClients] = useState([]);
 
   const getReservations = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/reservas/listar.php`);
-      setReservations(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
-    } catch (error) {
-      toast.error(error);
-    }
-  };
-
-  const getClients = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/clientes/listar.php`);
-      setClients(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
+      setReservations(res.data.data.sort((a, b) => (a.id_reserva > b.id_reserva ? 1 : -1)));
     } catch (error) {
       toast.error(error);
     }
@@ -43,7 +33,6 @@ export default function Reservations() {
 
   useEffect(() => {
     getReservations();
-    getClients();
   }, [setReservations]);
 
   return (
@@ -52,7 +41,7 @@ export default function Reservations() {
       <Title>
         <h2>Reservas</h2>
       </Title>
-      <Form onEdit={onEdit} setOnEdit={setOnEdit} getReservations={getReservations} clients={clients} />
+      <Form onEdit={onEdit} setOnEdit={setOnEdit} getReservations={getReservations} />
       <Grid setOnEdit={setOnEdit} reservations={reservations} setReservations={setReservations} />
       <PageContainer>
         <Pagination />

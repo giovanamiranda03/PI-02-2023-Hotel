@@ -47,9 +47,9 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
 
   const handleDelete = async (id) => {
     await axios
-    .delete(`${process.env.API_URL}/reservas/excluir.php`, {
-      id
-    })
+      .delete(`${process.env.API_URL}/reservas/excluir.php`, {
+        id
+      })
       .then(({ data }) => {
         const newArray = reservations.filter((user) => user.id !== id);
 
@@ -61,27 +61,30 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
     setOnEdit(null);
   };
 
-
   return (
     <Table>
       <Thead>
         <Tr>
-          <Th>Nome do cliente</Th>
-          <Th>Data de entrada</Th>
-          <Th>Data da saída</Th>
-          <Th>N°Quarto</Th>
-          <Th>Valor</Th>
+          <Th>ID</Th>
+          <Th>Cliente</Th>
+          <Th>N° Quarto</Th>
+          <Th>Data entrada</Th>
+          <Th>Data saida</Th>
+          <Th>Forma de pagamento</Th>
+          <Th>Status</Th>
           <Th>Ações</Th>
         </Tr>
       </Thead>
       <Tbody>
         {reservations.map((item, i) => (
           <Tr key={i}>
-            <Td>{item.cliente}</Td>
-            <Td onlyWeb>{item.data_entrada}</Td>
-            <Td onlyWeb>{item.data_saida}</Td>
-            <Td onlyWeb>{item.id_quarto}</Td>
-            <Td onlyWeb>{item.valor}</Td>
+            <Td>{item.id_reserva}</Td>
+            <Td>{item.nome_cliente}</Td>
+            <Td>{item.numero_quarto}</Td>
+            <Td>{item.data_entrada}</Td>
+            <Td>{item.data_saida == "0000-00-00" ? "Nao definida" : item.data_saida}</Td>
+            <Td>{item.forma_pagamento}</Td>
+            <Td>{item.status ? "Ativa" : "Finalizada"}</Td>
             <Td alignCenter>
               <FaEdit onClick={() => handleEdit(item)} />
               <FaTrash onClick={() => handleDelete(item.id)} />
