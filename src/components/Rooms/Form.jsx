@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -8,38 +8,18 @@ const FormContainer = styled.form`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 20px 60px;
-  padding: 20px 241px;
+  gap: 59px;
+  align-items: start;
+  justify-content: start;
+  padding: 20px 110px;
   background-color: #16161a;
   box-shadow: 0px 0px 2px #ccc;
   border-radius: 5px;
 
   @media (max-width: 600px) {
     flex-direction: column;
-    column-gap: 20px;
+    padding: 10px; 
   }
-`;
-
-const LineUp = styled.div`
-  display: flex;
-  gap: 59px;
-  align-items: start;
-  justify-content: start;
-  margin-bottom: 16px;
-`;
-
-const LineDown = styled.div`
-  display: flex;
-  gap: 59px;
-  width: 100%;
-`;
-
-const LineWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 `;
 const InputArea = styled.div`
   display: flex;
@@ -57,18 +37,11 @@ const Input = styled.input`
   ::placeholder {
     color: #ccc;
   }
-`;
 
-const Select = styled.select`
-  width: 200px;
-  height: 44px;
-  padding: 0 10px;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-  background-color: #16161a;
-  color: #fff;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
-
 
 const Label = styled.label``;
 
@@ -90,6 +63,10 @@ const Button = styled.button`
 
   &:hover {
     background-color: #F5D189;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%; 
   }
 `;
 
@@ -185,6 +162,7 @@ const Form = ({ getRooms, onEdit, setOnEdit }) => {
         />
       </InputArea>
       <InputArea>
+        <LabelButton>.</LabelButton>
         <Button type="submit">SALVAR</Button>
       </InputArea>
     </FormContainer>
