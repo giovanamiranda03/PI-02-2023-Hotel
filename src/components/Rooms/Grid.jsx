@@ -69,7 +69,6 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
           <Th>N°Quarto</Th>
           <Th>Capacidade</Th>
           <Th>Diaria</Th>
-          <Th>Disponível</Th>
           <Th>Ações</Th>
         </Tr>
       </Thead>
@@ -79,10 +78,11 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
             <Td >{item.numero_quarto}</Td>
             <Td >{item.capacidade}</Td>
             <Td >R$ {item.valor_diaria}</Td>
-            <Td >{item.disponivel ? "Sim" : "Não"}</Td>
             <Td alignCenter >
-              <FaEdit onClick={() => handleEdit(item)} />
-              <FaTrash onClick={() => handleDelete(item.numero_quarto)} />
+              <ContainerIcon>
+                <FaEdit onClick={() => handleEdit(item)} />
+                <FaTrash onClick={() => handleDelete(item.numero_quarto)} />
+              </ContainerIcon>
             </Td>
           </Tr>
         ))}
