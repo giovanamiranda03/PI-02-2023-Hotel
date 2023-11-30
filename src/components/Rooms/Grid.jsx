@@ -40,6 +40,11 @@ export const Td = styled.td`
   }
 `;
 
+const ContainerIcon = styled.div`
+  display: flex;
+  gap: 15px;
+`;
+
 const Grid = ({ rooms, setRooms, setOnEdit }) => {
   const handleEdit = (item) => {
     setOnEdit(item);
