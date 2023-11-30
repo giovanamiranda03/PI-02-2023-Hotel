@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaCheck, FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
@@ -40,26 +40,50 @@ export const Td = styled.td`
   }
 `;
 
-const Grid = ({ reservations, setReservations, setOnEdit }) => {
+const ContainerIcon = styled.div`
+  display: flex;
+  gap: 15px;
+`;
+
+const Grid = ({ reservations, setReservations, setOnEdit, getReservations }) => {
   const handleEdit = (item) => {
     setOnEdit(item);
   };
 
   const handleDelete = async (id) => {
-    await axios
-      .delete(`${process.env.API_URL}/reservas/excluir.php`, {
-        id
-      })
-      .then(({ data }) => {
-        const newArray = reservations.filter((user) => user.id !== id);
-
-        setReservations(newArray);
-        toast.success(data);
-      })
-      .catch(({ data }) => toast.error(data));
-
+    try {
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}/reservas/excluir.php`, { data: { id_reserva: id }, });
+      const newReservations = reservations.filter((item) => item.id_reserva !== id);
+      setReservations(newReservations);
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
     setOnEdit(null);
   };
+
+  const handleFinalizarReserva = async (id_reserva) => {
+    const data = new Date();
+
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+
+    const dataFormatada = `${ano}-${mes}-${dia}`;
+    console.log(dataFormatada);
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/reservas/finalizar.php`, {
+        id_reserva: id_reserva,
+        data_saida: dataFormatada
+      });
+      toast.success(response.data.message);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.message);
+    }
+
+    getReservations()
+  }
 
   return (
     <Table>
@@ -86,8 +110,11 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
             <Td>{item.forma_pagamento}</Td>
             <Td>{item.status ? "Ativa" : "Finalizada"}</Td>
             <Td alignCenter>
-              <FaEdit onClick={() => handleEdit(item)} />
-              <FaTrash onClick={() => handleDelete(item.id)} />
+              <ContainerIcon>
+                <FaEdit onClick={() => handleEdit(item)} />
+                <FaTrash onClick={() => handleDelete(item.id_reserva)} />
+                <FaCheck onClick={() => handleFinalizarReserva(item.id_reserva)} />
+              </ContainerIcon>
             </Td>
           </Tr>
         ))}

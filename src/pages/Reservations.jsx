@@ -42,7 +42,7 @@ export default function Reservations() {
         <h2>Reservas</h2>
       </Title>
       <Form onEdit={onEdit} setOnEdit={setOnEdit} getReservations={getReservations} />
-      <Grid setOnEdit={setOnEdit} reservations={reservations} setReservations={setReservations} />
+      <Grid setOnEdit={setOnEdit} reservations={reservations} setReservations={setReservations} getReservations={getReservations} />
       <PageContainer>
         <Pagination />
       </PageContainer>

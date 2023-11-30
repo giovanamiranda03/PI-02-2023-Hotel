@@ -26,24 +26,24 @@ const PageNumber = styled.span`
 
 const PaginationButton = styled.button`
   margin: 0 5px;
-  padding: 8px;
+  padding: 4px;
   cursor: pointer;
-  border: 1px solid #F5D156;
+  border: 2px solid #F5D156;
   border-radius: 4px;
-  background-color: #F5D156;
-  color: white;
+  background-color: transparent;
+  color: #F5D156;
   font-size: 16px;
 
   &:disabled {
-    background-color: #ccc;
-    border: 1px solid #ccc;
+    background-color: transparent;
+    border: 2px solid #ccc;
     color: white;
     cursor: not-allowed;
   }
 
   &:hover:enabled {
     background-color: #F5D156;
-    border: 1px solid #F5D156;
+    color: white;
   }
 `;
 

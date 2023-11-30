@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import loginImage from '../assets/loginImage.svg';
 import logo from '../assets/logo.svg';
+import { Eye, EyeSlash } from '@phosphor-icons/react';
 
 const ContainerLogin = styled.div`
   display: grid;
@@ -53,13 +54,6 @@ const FormEmail = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-`;
-
-const FormPassword = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  position: relative;
 `;
 
 const RightSide = styled.img`
@@ -116,6 +110,26 @@ const Input = styled.input`
     border-color: #e53e3e;
   }
 `;
+const FormPassword = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+`;
+
+const PasswordToggle = styled.span`
+  position: absolute;
+  top: 70%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #bbb;
+
+  &:hover {
+    color: #f5d156;
+  }
+`;
+
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -152,13 +166,14 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (email === 'teste@teste.com' && password === 'teste123') {
-      navigate('/');
+      navigate('/home');
     } else {
       setError('Credenciais inválidas. Tente novamente.');
     }
@@ -179,26 +194,30 @@ export default function Login() {
             <FormEmail>
               <Label htmlFor="email">E-mail</Label>
               <Input
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Insira seu email"
               />
-              {error.email && (
-                <ErrorMessage>{error.email?.message}</ErrorMessage>
+              {error && (
+                <ErrorMessage>{error}</ErrorMessage>
               )}
+
             </FormEmail>
 
             <FormPassword>
               <Label htmlFor="password">Senha</Label>
               <Input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Insira sua senha"
               />
-              {error.password && (
-                <ErrorMessage>{error.password?.message}</ErrorMessage>
+              <PasswordToggle onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <EyeSlash size={24} /> : <Eye size={24} />}
+              </PasswordToggle>
+              {error && (
+                <ErrorMessage>{error}</ErrorMessage>
               )}
             </FormPassword>
 
