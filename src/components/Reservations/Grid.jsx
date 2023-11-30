@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaCheck, FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
@@ -66,6 +66,9 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
     setOnEdit(null);
   };
 
+  const handleFinalizarReserva = (id_reserva) => {
+    console.log(`Finalizando reserva com o ID: ${id_reserva}`);
+  }
 
   return (
     <Table>
@@ -91,6 +94,7 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
               <ContainerIcon>
                 <FaEdit onClick={() => handleEdit(item)} />
                 <FaTrash onClick={() => handleDelete(item.id)} />
+                <FaCheck onClick={() => handleFinalizarReserva(item.id_reserva)} />
               </ContainerIcon>
             </Td>
           </Tr>
