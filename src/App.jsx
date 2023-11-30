@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import Clients from './pages/Clients';
@@ -25,11 +25,12 @@ export default function App() {
       <Container>
         <Router>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/rooms" element={<Rooms />} />
             <Route path="/reservations" element={<Reservations />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Router>
       </Container>
