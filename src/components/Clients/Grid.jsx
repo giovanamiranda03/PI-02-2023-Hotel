@@ -44,7 +44,7 @@ export const Td = styled.td`
 
 const ContainerIcon = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 15px;
 `;
 
 const Grid = ({ clients, setClients, setOnEdit }) => {
@@ -88,8 +88,10 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
               <Td onlyWeb>{item.cpf}</Td>
               <Td onlyWeb>{item.telefone}</Td>
               <Td alignCenter>
-                <FaEdit onClick={() => handleEdit(item)} />
-                <FaTrash onClick={() => handleDelete(item.id_cliente)} />
+                <ContainerIcon>
+                  <FaEdit onClick={() => handleEdit(item)} />
+                  <FaTrash onClick={() => handleDelete(item.id_cliente)} />
+                </ContainerIcon>
               </Td>
             </Tr>
           ))}

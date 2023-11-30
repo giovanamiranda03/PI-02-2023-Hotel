@@ -40,6 +40,11 @@ export const Td = styled.td`
   }
 `;
 
+const ContainerIcon = styled.div`
+  display: flex;
+  gap: 15px;
+`;
+
 const Grid = ({ reservations, setReservations, setOnEdit }) => {
   const handleEdit = (item) => {
     setOnEdit(item);
@@ -47,9 +52,9 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
 
   const handleDelete = async (id) => {
     await axios
-    .delete(`${process.env.API_URL}/reservas/excluir.php`, {
-      id
-    })
+      .delete(`${process.env.API_URL}/reservas/excluir.php`, {
+        id
+      })
       .then(({ data }) => {
         const newArray = reservations.filter((user) => user.id !== id);
 
@@ -69,7 +74,7 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
           <Th>Nome do cliente</Th>
           <Th>Data de entrada</Th>
           <Th>Data da saída</Th>
-          <Th>N°Quarto</Th>
+          <Th>Número do Quarto</Th>
           <Th>Valor</Th>
           <Th>Ações</Th>
         </Tr>
@@ -83,8 +88,10 @@ const Grid = ({ reservations, setReservations, setOnEdit }) => {
             <Td onlyWeb>{item.id_quarto}</Td>
             <Td onlyWeb>{item.valor}</Td>
             <Td alignCenter>
-              <FaEdit onClick={() => handleEdit(item)} />
-              <FaTrash onClick={() => handleDelete(item.id)} />
+              <ContainerIcon>
+                <FaEdit onClick={() => handleEdit(item)} />
+                <FaTrash onClick={() => handleDelete(item.id)} />
+              </ContainerIcon>
             </Td>
           </Tr>
         ))}
