@@ -1,4 +1,4 @@
-import { List } from "@phosphor-icons/react";
+import { List } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import hotelImage from '../assets/hotel.svg';
@@ -13,6 +13,8 @@ const HeaderContainer = styled.header`
   align-items: center;
   font-size: 22px;
   color: #fff;
+  background-color: #16161a;
+  border-radius: 5px;
   width: 100%;
 `;
 
@@ -20,7 +22,7 @@ const HamburgerIcon = styled.div`
   display: none;
   cursor: pointer;
   font-size: 30px;
-  
+
   @media (max-width: 768px) {
     display: block;
   }
@@ -33,13 +35,12 @@ const Logo = styled.div`
   padding: 5px 38px 5px 38px;
 `;
 const ImageLogo = styled.img`
-  width: 100%; 
+  width: 100%;
   display: block;
   margin: 0 auto 0.5em;
 `;
 
 const Navigation = styled.nav`
-  background-color: #16161A;
   display: flex;
   justify-content: center;
   padding: 10px;
@@ -68,7 +69,7 @@ const Navigation = styled.nav`
 
 const NavItem = styled.li`
   @media (max-width: 768px) {
-    margin-bottom: 10px;  
+    margin-bottom: 10px;
   }
 `;
 
@@ -76,14 +77,14 @@ const Link = styled.a`
   text-decoration: none;
   color: #fff;
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
 
   &:hover {
     text-decoration: underline;
   }
 
   @media (max-width: 768px) {
-    text-align: center;  
+    text-align: center;
   }
 `;
 
@@ -99,17 +100,17 @@ const Image = styled.img`
 
 const Logout = styled.div`
   padding: 10px;
-  background-color: #16161A;
+  background-color: #16161a;
   a {
     text-decoration: none;
-    color: #DB3030;
+    color: #db3030;
     &:hover {
       text-decoration: underline;
     }
   }
 
   @media (max-width: 768px) {
-    background-color: #1F1F1F;
+    background-color: #1f1f1f;
   }
 `;
 
@@ -126,7 +127,7 @@ export default function Header() {
         <List size={40} />
       </HamburgerIcon>
       <Logo>
-        <Link href="/">
+        <Link href="/home">
           <ImageLogo src={logo} alt="Logo do site" />
         </Link>
       </Logo>

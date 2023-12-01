@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 const FormContainer = styled.form`
   max-width: 1200px;
@@ -75,17 +76,17 @@ const Button = styled.button`
 
   a {
     text-decoration: none;
-    color: #16161A;
+    color: #16161a;
   }
 
   &:hover {
-    background-color: #F5D189;
+    background-color: #f5d189;
   }
 `;
 
 const LabelButton = styled.label`
   color: #16161a;
-`
+`;
 
 const Form = ({ getClients, onEdit, setOnEdit }) => {
   const ref = useRef();
@@ -99,7 +100,7 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     }
   }, [onEdit]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const client = ref.current;
@@ -109,49 +110,46 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     const telefone = client?.telefone.value;
     const cpf = client?.cpf.value;
 
-    if (
-      !nome ||
-      !email ||
-      !telefone ||
-      !cpf
-    ) {
+    if (!nome || !email || !telefone || !cpf) {
       return toast.warn('Preencha todos os campos!');
     }
 
     if (onEdit) {
       try {
-        const response = await axios.put(`${process.env.REACT_APP_API_URL}/clientes/atualizar.php`, {
-          id_cliente: id,
-          nome: nome,
-          email: email,
-          fone: telefone,
-          cpf: cpf,
-        });
+        const response = await axios.put(
+          `${process.env.REACT_APP_API_URL}/clientes/atualizar.php`,
+          {
+            id_cliente: id,
+            nome: nome,
+            email: email,
+            fone: telefone,
+            cpf: cpf,
+          }
+        );
         toast.success(response.data.message);
-      }
-      catch (err) {
+      } catch (err) {
         toast.error(err.response.data.message);
       }
-    }
-    else {
+    } else {
       try {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/clientes/cadastrar.php`, {
-          nome: nome,
-          email: email,
-          fone: telefone,
-          cpf: cpf,
-        });
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}/clientes/cadastrar.php`,
+          {
+            nome: nome,
+            email: email,
+            fone: telefone,
+            cpf: cpf,
+          }
+        );
         toast.success(response.data.message);
-      }
-      catch (err) {
-        console.log(err)
+      } catch (err) {
+        console.log(err);
         toast.error(err.response.data.message);
       }
     }
-
 
     if (ref.current) {
-      ref.current.reset()
+      ref.current.reset();
     }
     setOnEdit(null);
     getClients();
@@ -163,24 +161,30 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
         <LineUp>
           <InputArea>
             <Label>Nome</Label>
-            <Input placeholder="Insira seu nome" name="nome"
-            />
+            <Input placeholder="Insira seu nome" name="nome" />
           </InputArea>
           <InputArea>
             <Label>E-mail</Label>
-            <Input placeholder="Insira seu e-mail" name="email" type="email"
-            />
+            <Input placeholder="Insira seu e-mail" name="email" type="email" />
           </InputArea>
           <InputArea>
             <Label>CPF</Label>
-            <Input placeholder="Insira seu CPF" name="cpf"
+            <Input
+              as={InputMask}
+              mask="999.999.999-99"
+              placeholder="Insira seu CPF"
+              name="cpf"
             />
           </InputArea>
         </LineUp>
         <LineDown>
           <InputArea>
             <Label>Telefone</Label>
-            <Input placeholder="Insira o telefone" name="telefone"
+            <Input
+              as={InputMask}
+              mask="(99) 99999-9999"
+              placeholder="Insira o telefone"
+              name="telefone"
             />
           </InputArea>
           <InputArea>
