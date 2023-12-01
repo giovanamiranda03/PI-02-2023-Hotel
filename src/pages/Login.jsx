@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import loginImage from '../assets/loginImage.svg';
 import logo from '../assets/logo.svg';
-import { Eye, EyeSlash } from '@phosphor-icons/react';
 
 const ContainerLogin = styled.div`
   display: grid;
@@ -117,20 +116,6 @@ const FormPassword = styled.div`
   position: relative;
 `;
 
-const PasswordToggle = styled.span`
-  position: absolute;
-  top: 70%;
-  right: 1rem;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #bbb;
-
-  &:hover {
-    color: #f5d156;
-  }
-`;
-
-
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -166,16 +151,24 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+
+  const validateCredentials = async (email, password) => {
+    return { isValid: email === 'teste@teste.com' && password === 'teste123' };
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (email === 'teste@teste.com' && password === 'teste123') {
-      navigate('/home');
-    } else {
-      setError('Credenciais inválidas. Tente novamente.');
+    try {
+      const response = await validateCredentials(email, password);
+      if (response.isValid) {
+        navigate('/home');
+      } else {
+        setError('Credenciais inválidas. Tente novamente.');
+      }
+    } catch (error) {
+      setError('Ocorreu um erro ao tentar fazer login. Por favor, tente novamente.');
     }
   };
 
@@ -208,17 +201,12 @@ export default function Login() {
             <FormPassword>
               <Label htmlFor="password">Senha</Label>
               <Input
-                type={showPassword ? 'text' : 'password'}
+                type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Insira sua senha"
               />
-              <PasswordToggle onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <EyeSlash size={24} /> : <Eye size={24} />}
-              </PasswordToggle>
-              {error && (
-                <ErrorMessage>{error}</ErrorMessage>
-              )}
+              {error && <ErrorMessage>{error}</ErrorMessage>}
             </FormPassword>
 
             <ButtonContainer onClick={handleLogin}>

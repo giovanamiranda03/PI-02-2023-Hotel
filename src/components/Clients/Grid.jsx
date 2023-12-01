@@ -91,8 +91,8 @@ const Grid = ({ clients, setClients, setOnEdit }) => {
               <Td onlyWeb>{item.hospedado ? "Sim" : "Não"}</Td>
               <Td alignCenter>
                 <ContainerIcon>
-                  <FaEdit onClick={() => handleEdit(item)} />
-                  <FaTrash onClick={() => handleDelete(item.id_cliente)} />
+                  <FaEdit color="#5353ec" onClick={() => handleEdit(item)} />
+                  <FaTrash color="#FF0000" onClick={() => handleDelete(item.id_cliente)} />
                 </ContainerIcon>
               </Td>
             </Tr>
