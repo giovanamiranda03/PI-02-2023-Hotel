@@ -111,9 +111,9 @@ const Grid = ({ reservations, setReservations, setOnEdit, getReservations }) => 
             <Td>{item.status ? "Ativa" : "Finalizada"}</Td>
             <Td alignCenter>
               <ContainerIcon>
-                <FaEdit onClick={() => handleEdit(item)} />
-                <FaTrash onClick={() => handleDelete(item.id_reserva)} />
-                <FaCheck onClick={() => handleFinalizarReserva(item.id_reserva)} />
+                <FaEdit color="#5353ec" onClick={() => handleEdit(item)} />
+                <FaTrash color="#FF0000" onClick={() => handleDelete(item.id_cliente)} />
+                <FaCheck color="#008000" onClick={() => handleFinalizarReserva(item.id_reserva)} />
               </ContainerIcon>
             </Td>
           </Tr>
