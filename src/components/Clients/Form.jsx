@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import InputMask from 'react-input-mask';
@@ -90,13 +90,17 @@ const LabelButton = styled.label`
 
 const Form = ({ getClients, onEdit, setOnEdit }) => {
   const ref = useRef();
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [cpf, setCpf] = useState('');
 
   useEffect(() => {
     if (onEdit) {
-      ref.current.nome.value = onEdit.nome;
-      ref.current.email.value = onEdit.email;
-      ref.current.telefone.value = onEdit.telefone;
-      ref.current.cpf.value = onEdit.cpf;
+      setNome(onEdit.nome);
+      setEmail(onEdit.email);
+      setTelefone(onEdit.telefone);
+      setCpf(onEdit.cpf);
     }
   }, [onEdit]);
 
@@ -151,6 +155,12 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
     if (ref.current) {
       ref.current.reset();
     }
+
+    setNome('');
+    setEmail('');
+    setTelefone('');
+    setCpf('');
+  
     setOnEdit(null);
     getClients();
   };
@@ -161,11 +171,11 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
         <LineUp>
           <InputArea>
             <Label>Nome</Label>
-            <Input placeholder="Insira seu nome" name="nome" />
+            <Input placeholder="Insira seu nome" name="nome" value={nome} onChange={e => setNome(e.target.value)} />
           </InputArea>
           <InputArea>
             <Label>E-mail</Label>
-            <Input placeholder="Insira seu e-mail" name="email" type="email" />
+            <Input placeholder="Insira seu e-mail" name="email" type="email" value={email} onChange={e => setEmail(e.target.value)}  />
           </InputArea>
           <InputArea>
             <Label>CPF</Label>
@@ -174,6 +184,8 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
               mask="999.999.999-99"
               placeholder="Insira seu CPF"
               name="cpf"
+              value={cpf}
+              onChange={e => setCpf(e.target.value)}
             />
           </InputArea>
         </LineUp>
@@ -185,6 +197,8 @@ const Form = ({ getClients, onEdit, setOnEdit }) => {
               mask="(99) 99999-9999"
               placeholder="Insira o telefone"
               name="telefone"
+              value={telefone}
+              onChange={e => setTelefone(e.target.value)}
             />
           </InputArea>
           <InputArea>
