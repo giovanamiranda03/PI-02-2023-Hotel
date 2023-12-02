@@ -87,8 +87,8 @@ const Grid = ({ rooms, setRooms, setOnEdit }) => {
             <Td>{item.disponivel ? "Sim" : "Não"}</Td>
             <Td alignCenter >
               <ContainerIcon>
-                <FaEdit onClick={() => handleEdit(item)} />
-                <FaTrash onClick={() => handleDelete(item.numero_quarto)} />
+              <FaEdit color="##1089E8" onClick={() => handleEdit(item)} />
+                <FaTrash color="##D42626" onClick={() => handleDelete(item.numero_quarto)} />
               </ContainerIcon>
             </Td>
           </Tr>

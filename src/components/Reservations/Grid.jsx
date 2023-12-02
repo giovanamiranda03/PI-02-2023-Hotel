@@ -45,6 +45,14 @@ const ContainerIcon = styled.div`
   gap: 15px;
 `;
 
+const Active = styled.p`
+  color: #008000;
+`
+
+const Finish = styled.p`
+  color: #D42626;
+`
+
 const Grid = ({ reservations, setReservations, setOnEdit, getReservations }) => {
   const handleEdit = (item) => {
     setOnEdit(item);
@@ -106,14 +114,14 @@ const Grid = ({ reservations, setReservations, setOnEdit, getReservations }) => 
             <Td>{item.nome_cliente}</Td>
             <Td>{item.numero_quarto}</Td>
             <Td>{item.data_entrada}</Td>
-            <Td>{item.data_saida == "0000-00-00" ? "Nao definida" : item.data_saida}</Td>
+            <Td>{item.data_saida === "0000-00-00" ? "Nao definida" : item.data_saida}</Td>
             <Td>{item.forma_pagamento}</Td>
-            <Td>{item.status ? "Ativa" : "Finalizada"}</Td>
+            <Td >{item.status ? <Active>Ativa</Active> : <Finish>Finalizada</Finish>}</Td>
             <Td alignCenter>
               <ContainerIcon>
-                <FaEdit color="#5353ec" onClick={() => handleEdit(item)} />
-                <FaTrash color="#FF0000" onClick={() => handleDelete(item.id_cliente)} />
-                <FaCheck color="#008000" onClick={() => handleFinalizarReserva(item.id_reserva)} />
+                <FaEdit color="##1089E8" onClick={() => handleEdit(item)} />
+                <FaTrash color="##D42626" onClick={() => handleDelete(item.id_cliente)} />
+                <FaCheck onClick={() => handleFinalizarReserva(item.id_reserva)} />
               </ContainerIcon>
             </Td>
           </Tr>
